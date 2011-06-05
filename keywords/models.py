@@ -18,7 +18,7 @@ class Keyword(models.Model):
 		s=re.sub(r'(^_)|(_$)','',s)
 		if len(s)>=3:
 			try:
-				plink=Keyword.objects.get(permalink=s)s
+				plink=Keyword.objects.get(permalink=s)
 			except:
 				self.permalink=s
 		models.Model.save(self,force_insert,force_update)

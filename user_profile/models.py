@@ -19,7 +19,7 @@ class ContactInfoPair(models.Model):
 	key = models.CharField(max_length=75)
 	value = models.CharField(max_length=75)
 	def __unicode__(self):
-		return "%s : %s" self.key, self.value
+		return "%s : %s" % self.key, self.value
 
 	def save(self, force_insert=False, force_update=False):
 		if not self.type:
