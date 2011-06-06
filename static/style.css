@@ -327,6 +327,9 @@ h3 {
 
 
 /*===== footer =====*/
+#footer{
+	text-shadow: 1px 1px 1px white;
+}
 #footer a {
 	color:#fdf4b9;
 	text-decoration:none;
