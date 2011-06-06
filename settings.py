@@ -126,7 +126,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'words.keywords',
     'words.user_profile',
-    'words.static',
     'words.links',
 )
 

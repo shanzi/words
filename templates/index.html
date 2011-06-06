@@ -66,12 +66,20 @@
 							{% if section.keywords.all %}
 							<div class="keywords">
 								{% for keyword in section.keywords.all%}
-								<a href="#" >keyword</a>
+								<a href="#" >{{ keyword }}</a>
 								{% endfor %}
 							</div>
 							{% endif %}
 							</li>
 							{% endfor %}
+							{% if other_keywords %}
+							<li class="keywords">
+								<h3>Other keywords:</h3>
+								{% for keyword in other_keywords %}
+								<a href="#" >{{ keyword }}</a>
+								{% endfor %}
+							</li>
+							{% endif %}
 							{% else %}
 							<li>No content here!</li>
 							{% endif %}

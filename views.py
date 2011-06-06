@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
+from keywords.models import Keyword
 import hashlib
 
 
@@ -15,5 +16,6 @@ def index(request):
     else:
         name=user.username
     gravatar_img=get_gravatar(user.email)
+    other_keywords=Keyword.objects.filter(section=None).all()
     return render_to_response('index.html',locals())
 
