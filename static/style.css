@@ -37,9 +37,7 @@ table, table td {
 .fleft { 
 	float:left;
 }
-.fright { 
-	float:right;
-}
+
 .clear { 
 	clear:both;
 }
@@ -73,7 +71,7 @@ table, table td {
 	overflow:hidden;
 }
 #links,#navwrapper {
-	padding:0 0 0 400px;
+	padding:0 0 0 300px;
 }
 	#links .aside {
 		float:left;
@@ -86,10 +84,6 @@ table, table td {
 }
 #links a,#links dd{
 	text-shadow:1px 1px 1px white;
-}
-#links dd{
-	border-left: 5px solid #ccc;
-	padding-left :5px;
 }
 	
 .mainContent {
@@ -218,7 +212,7 @@ h3 {
 	overflow:hidden;
 	padding-bottom:17px;
 }
-	.img-list li a.img-wrap {
+	.img-list li a.img-wrap,.gravatar {
 		float:left;
 		border:7px solid #fff;
 		margin-right:20px;
@@ -227,8 +221,8 @@ h3 {
 		-o-box-shadow: 0 0 3px black;
 		box-shadow:0 0 3px black;
 	}
-	.img-list li a.img-wrap:hover {
-		border:7px solid #12171a;
+	.img-list li a.img-wrap:hover,.gravatar:hover {
+		border:7px solid #00B4FF;
 	}
 	.img-list li h3 {
 		padding-top:10px;
@@ -308,35 +302,13 @@ h3 {
 }
 
 
-/*--- coin slider styles ---*/
-.slider-wrap {border:9px solid #141a1e;}
-.coin-slider { overflow: hidden; position: relative; background:#000; height:241px !important;}
-.coin-slider a{ text-decoration: none; outline: none; border: none; }
-
-.cs-prev, 
-.cs-next { text-indent:-9999em;}
-
-.cs-next {
-	background:url(images/next.png) no-repeat 0 0;
-	width:27px;
-	height:22px;
-	margin-right:11px;
-	display:block;
+#name{
+	font-size:3em;
+	color:#cf6;
 }
-.cs-prev {
-	background:url(images/prev.png) no-repeat 0 0;
-	width:27px;
-	height:22px;
-	margin-left:11px;
-	display:block;
+.gravatar{
+	margin-left:37px;
 }
-	
-
-/*===== content =====*/
-#content {
-	
-}
-
 /*===== footer =====*/
 #footer a {
 	color:#fdf4b9;

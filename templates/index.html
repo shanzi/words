@@ -31,10 +31,15 @@
 
 		<table>
 			<tr>
+				<td rowspan="2" valign="top">
+					<div class="gravatar">
+						<img src="{{gravatar_img}}" alt="" />
+					</div>
+				</td>
 				<td valign="top">
 					<div id="navwrapper">
 						<!-- .nav -->
-						<h2>Find Me<h2>
+						<h2 id="name">{{ name }}<h2>
 						<ol class="nav">
 							{% if info_pairs %}
 							{% for contact in info_pairs %}
@@ -52,21 +57,24 @@
 					<div class="mainContent">
 						<h2>About Me</h2>
 						<ul class="img-list">
+							{% if user.sections.all %}
+							{% for section in user.sections.all %}
 							<li>
-							<a href="/static/#" class="img-wrap"><img src="/static/images/1page-img1.jpg" alt="" /></a>
-							<h3>People Search</h3>
-							Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy <em><a href="/static/#">read more</a></em>
+							<a href="#" class="img-wrap"><img src="/media/{{ section.icon }}" alt="" /></a>
+							<h3>{{ section.title }} </h3>
+							{{ section.detail }}
+							{% if section.keywords.all %}
+							<div class="keywords">
+								{% for keyword in section.keywords.all%}
+								<a href="#" >keyword</a>
+								{% endfor %}
+							</div>
+							{% endif %}
 							</li>
-							<li>
-							<a href="/static/#" class="img-wrap"><img src="/static/images/1page-img2.jpg" alt="" /></a>
-							<h3>Background Investigation</h3>
-							Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy <em><a href="/static/#">read more</a></em>
-							</li>
-							<li>
-							<a href="/static/#" class="img-wrap"><img src="/static/images/1page-img3.jpg" alt="" /></a>
-							<h3>Surveillance</h3>
-							Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy <em><a href="/static/#">read more</a></em>
-							</li>
+							{% endfor %}
+							{% else %}
+							<li>No content here!</li>
+							{% endif %}
 						</ul>
 					</div>
 				</td>

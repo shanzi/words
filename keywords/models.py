@@ -1,11 +1,20 @@
 from django.db import models
+from django.contrib.auth.models import User
 import re
 
 # Create your models here.
-
+class KeywordSection(models.Model):
+    user = models.ForeignKey(User, related_name='sections')
+    title = models.CharField(max_length=75)
+    icon = models.ImageField(upload_to="icon/")
+    detail = models.CharField(max_length=75, blank=True)
+    
+    def __unicode__(self):
+        return self.title
 
 class Keyword(models.Model):
 	"""docstring"""
+        section = models.ForeignKey(KeywordSection, related_name='keywords',blank=True,null=True)
 	name = models.CharField(max_length=75)
 	permalink = models.CharField(max_length=75, blank=True)
 	
