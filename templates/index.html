@@ -16,7 +16,8 @@
 		<!-- header -->
 		<div id="header">
 			<div class="row-1">
-				<h2> {{ user.profile.sub_header }}</h2>
+				<h2 id="subheader"> {{ user.profile.sub_header }}</h2>
+
 			</div>
 			<div class="row-2">
 				<div class="wrapper">
@@ -35,9 +36,13 @@
 						<!-- .nav -->
 						<h2>Find Me<h2>
 						<ol class="nav">
+							{% if info_pairs %}
 							{% for contact in info_pairs %}
 							<li>  <a href="{{contact.value }}" >{{ contact.key }}</a>  </li>
 							{% endfor %}
+							{% else %}
+							No item here.
+							{% endif %}
 						</ol>
 						<!-- /.nav -->
 					</div>
@@ -74,8 +79,15 @@
 						<div class="wrapper">
 							<div class="aside">
 								<h2>Links</h2>
-								<dl class="contacts">
-
+								<dl>
+									{% if user.links.all %}
+									{% for link in user.links.all %}
+									<dt><a href="{{ link.link }}" >{{ link }}</a></dt>
+									<dd>{{ link.detail }}</dd>
+									{% endfor %}
+									{% else %}
+									<dd>No Links Here.</dd>
+									{% endif %}
 								</dl>
 							</div>
 						</div>
@@ -85,7 +97,7 @@
 		</table>
 		<!-- footer -->
 		<div id="footer">
-			ant.isnot.tk &copy; 2010 | <a href="/static/#">Privacy Policy</a>
+			ant.isnot.tk &copy; 2011 | <a href="/static/#">Privacy Policy</a>
 		</div>
 	</div>
 	<script type="text/javascript">

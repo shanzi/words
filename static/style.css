@@ -80,13 +80,24 @@ table, table td {
 		width:204px;
 		margin-right:55px;
 	}
-
+#links a{
+	font-weight:bold;
+	text-decoration:none;
+}
+#links a,#links dd{
+	text-shadow:1px 1px 1px white;
+}
+#links dd{
+	border-left: 5px solid #ccc;
+	padding-left :5px;
+}
+	
 .mainContent {
 	float:right;
 	width:457px;
 }
 #footer {
-	padding:55px 0 45px 252px;
+	padding:55px 0 45px 150px;
 }
 
 
@@ -161,10 +172,10 @@ h2 {
 	font-size:24px;
 	line-height:20px;
 	font-weight:normal;
-	color:#008080;
+	color:white;
 	margin-bottom:30px;
 	letter-spacing:-1px;
-	text-shadow:1px 1px 1px white;
+	text-shadow:1px 1px 1px black;
 }
 h3 {
 	font-size:18px;
@@ -250,19 +261,13 @@ h3 {
 	height:109px;
 	overflow:hidden;
 }
-	#header .row-1 .fright {
-		padding:41px 48px 0 0;
-		background:url('/static/images/WorldIcon.png') no-repeat 0 center;
-	}
 	#header .row-1 {
-		padding:0 0 0 58px;
-		font-size:48px;
 		line-height:1.2em;
 		color:#07b6fe;
 		text-decoration:none;
-		float:right;
 		letter-spacing:-2px;
 	}
+
 	.top-link{
 		color:#07b6fe;
 		font-size:24px;
@@ -277,6 +282,11 @@ h3 {
 	#header .row-2 h2 {
 		padding:53px 0 5px 0;
 	}
+#subheader{
+	color:white;
+	padding:85px 10px 0 100px;
+	text-shadow:1px 1px 1px #999; 
+}
 	
 	
 .nav{
@@ -290,6 +300,7 @@ h3 {
 	color:#00b4ff;
 	text-decoration:none;
 	border-bottom:1px dotted #656c70;
+	text-shadow:1px 1px 1px white;
 }
 .nav li a:hover, .nav li a.current {
 	color:black;
@@ -337,43 +348,6 @@ h3 {
 
 
 /*----- forms -----*/
-#contacts-form fieldset {
-	border:none;
-}
-	#contacts-form label {
-		display:block;
-		height:25px;
-	}
-	#contacts-form input {
-		width:170px;
-		border:1px solid #a4a4a4;
-		padding:2px 0 2px 5px;
-		color:black;
-		background:#171212;
-		display:block;
-	}
-	#contacts-form textarea {
-		width:263px;
-		background:#171212;
-		border:1px solid #a4a4a4;
-		padding:2px 0 2px 5px;
-		color:black;
-		overflow:auto;
-		height:65px;
-		margin-bottom:12px;
-	}
 
-	#contacts-form .col-1 {
-		width:183px !important;
-		margin:0 !important;
-	}
-	#contacts-form .col-2 {
-		width:271px !important;
-		margin:0 !important;
-	}
-	#contacts-form .button {
-		float:right;
-		margin-left:20px;
-	}
 
 /*==========================================*/

@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'words.keywords',
     'words.user_profile',
     'words.static',
+    'words.links',
 )
 
 
