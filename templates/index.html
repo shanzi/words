@@ -1,2 +1,101 @@
-{% load static %}
-{% get_static_prefix %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>{{ site_title }} </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<link href="/static/style.css" rel="stylesheet" type="text/css" />
+	<link href="/static/layout.css" rel="stylesheet" type="text/css" />
+	<!--[if IE]>
+	<link href="/static/ie_style.css" rel="stylesheet" type="text/css" />
+	<![endif]-->
+</head>
+
+<body id="page1">
+	<div id="main">
+		<!-- header -->
+		<div id="header">
+			<div class="row-1">
+				<h2> {{ user.profile.sub_header }}</h2>
+			</div>
+			<div class="row-2">
+				<div class="wrapper">
+					<div class="col-1">
+						<h1><a href="#">{{ user.profile.title }}</a></h1>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<table>
+			<tr>
+				<td valign="top">
+					<div id="navwrapper">
+						<!-- .nav -->
+						<h2>Find Me<h2>
+						<ol class="nav">
+							{% for contact in info_pairs %}
+							<li>  <a href="{{contact.value }}" >{{ contact.key }}</a>  </li>
+							{% endfor %}
+						</ol>
+						<!-- /.nav -->
+					</div>
+				</td>
+				<td rowspan="2" valign="top" >
+
+					<div class="mainContent">
+						<h2>About Me</h2>
+						<ul class="img-list">
+							<li>
+							<a href="/static/#" class="img-wrap"><img src="/static/images/1page-img1.jpg" alt="" /></a>
+							<h3>People Search</h3>
+							Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy <em><a href="/static/#">read more</a></em>
+							</li>
+							<li>
+							<a href="/static/#" class="img-wrap"><img src="/static/images/1page-img2.jpg" alt="" /></a>
+							<h3>Background Investigation</h3>
+							Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy <em><a href="/static/#">read more</a></em>
+							</li>
+							<li>
+							<a href="/static/#" class="img-wrap"><img src="/static/images/1page-img3.jpg" alt="" /></a>
+							<h3>Surveillance</h3>
+							Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy <em><a href="/static/#">read more</a></em>
+							</li>
+						</ul>
+					</div>
+				</td>
+		</tr>
+			<tr>
+				<td valign="top">
+
+					<!-- content -->
+					<div id="links">
+						<div class="wrapper">
+							<div class="aside">
+								<h2>Links</h2>
+								<dl class="contacts">
+
+								</dl>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<!-- footer -->
+		<div id="footer">
+			ant.isnot.tk &copy; 2010 | <a href="/static/#">Privacy Policy</a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+		<script type="text/javascript">
+			try {
+				var pageTracker = _gat._getTracker("UA-7078796-1");
+				pageTracker._trackPageview();
+			} catch(err) {}</script>
+	</body>
+</html>

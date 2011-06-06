@@ -13,7 +13,7 @@ body {
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:100%; 
 	line-height:1.3125em;
-	color:#fff;
+	color:black;
 }
 
 img {
@@ -44,9 +44,6 @@ table, table td {
 	clear:both;
 }
 
-.col-1, .col-2, .col-3 { 
-	float:left;
-}
 
 .alignright { 
 	text-align:right;
@@ -73,21 +70,21 @@ table, table td {
 }
 
 #header {
-	height:398px;
 	overflow:hidden;
 }
-#content {
-	padding:36px 0 0 265px;
+#links,#navwrapper {
+	padding:0 0 0 400px;
 }
-	#content .aside {
+	#links .aside {
 		float:left;
 		width:204px;
 		margin-right:55px;
 	}
-	#content .mainContent {
-		float:left;
-		width:457px;
-	}
+
+.mainContent {
+	float:right;
+	width:457px;
+}
 #footer {
 	padding:55px 0 45px 252px;
 }
@@ -150,12 +147,11 @@ h1 {
 	font-size:55px;
 	line-height:1.2em;
 	font-weight:normal;
-	background:url(images/logo.gif) no-repeat 44px 0;
 	padding:19px 0 0 0;
 	letter-spacing:-2px;
 }
 	h1 a {
-		color:#fff;
+		color:black;
 		text-decoration:none;
 	}
 	h1 a:hover {
@@ -165,9 +161,10 @@ h2 {
 	font-size:24px;
 	line-height:20px;
 	font-weight:normal;
-	color:#fdf4b9;
+	color:#008080;
 	margin-bottom:30px;
 	letter-spacing:-1px;
+	text-shadow:1px 1px 1px white;
 }
 h3 {
 	font-size:18px;
@@ -212,11 +209,15 @@ h3 {
 }
 	.img-list li a.img-wrap {
 		float:left;
-		border:7px solid #12171a;
+		border:7px solid #fff;
 		margin-right:20px;
+		-webkit-box-shadow:0 0 3px black;
+		-moz-box-shadow: 0 0 3px black;
+		-o-box-shadow: 0 0 3px black;
+		box-shadow:0 0 3px black;
 	}
 	.img-list li a.img-wrap:hover {
-		border:7px solid #fff;
+		border:7px solid #12171a;
 	}
 	.img-list li h3 {
 		padding-top:10px;
@@ -236,7 +237,7 @@ h3 {
 	padding:0 0 7px 14px;
 }
 	.list1 li a {
-		color:#fff;
+		color:black;
 		text-decoration:none;
 	}
 	.list1 li a:hover {
@@ -251,9 +252,9 @@ h3 {
 }
 	#header .row-1 .fright {
 		padding:41px 48px 0 0;
+		background:url('/static/images/WorldIcon.png') no-repeat 0 center;
 	}
-	#header .row-1 .top-link {
-		background:url(images/marker1.gif) no-repeat 0 20px;
+	#header .row-1 {
 		padding:0 0 0 58px;
 		font-size:48px;
 		line-height:1.2em;
@@ -262,8 +263,13 @@ h3 {
 		float:right;
 		letter-spacing:-2px;
 	}
+	.top-link{
+		color:#07b6fe;
+		font-size:24px;
+		text-decoration:none;
+	}
 	#header .row-1 .top-link:hover {
-		color:#fff;
+		color:#black;
 	}
 #header .row-2 {
 	padding:0 0 0 37px;
@@ -273,22 +279,22 @@ h3 {
 	}
 	
 	
-		#header .nav li {
-			font-size:16px;
-			padding-bottom:11px;
-		}
-			#header .nav li span {
-				padding-right:13px;
-			}
-			#header .nav li a {
-				color:#00b4ff;
-				text-decoration:none;
-				border-bottom:1px dotted #656c70;
-			}
-			#header .nav li a:hover, #header .nav li a.current {
-				color:#fff;
-				border-bottom:none;
-			}
+.nav{
+	list-style:decimal-leading-zero;
+}
+.nav li {
+	font-size:16px;
+	padding-bottom:11px;
+}
+.nav li a {
+	color:#00b4ff;
+	text-decoration:none;
+	border-bottom:1px dotted #656c70;
+}
+.nav li a:hover, .nav li a.current {
+	color:black;
+	border-bottom:none;
+}
 
 
 /*--- coin slider styles ---*/
@@ -342,7 +348,7 @@ h3 {
 		width:170px;
 		border:1px solid #a4a4a4;
 		padding:2px 0 2px 5px;
-		color:#fff;
+		color:black;
 		background:#171212;
 		display:block;
 	}
@@ -351,7 +357,7 @@ h3 {
 		background:#171212;
 		border:1px solid #a4a4a4;
 		padding:2px 0 2px 5px;
-		color:#fff;
+		color:black;
 		overflow:auto;
 		height:65px;
 		margin-bottom:12px;

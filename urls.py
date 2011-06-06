@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
-from views import index
-from djagno.conf.urls.static import static
+from django.conf.urls.static import static
+from words.views import *
 
 
 # Uncomment the next two lines to enable the admin:
@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    url(r'^$',index),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$',index),
 )
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT )

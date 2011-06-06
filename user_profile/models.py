@@ -6,10 +6,12 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
 	"""docstring"""
 	user = models.OneToOneField(User,  related_name='profile')
+        title = models.CharField(max_length=75,default='Title')
+        sub_header = models.CharField(max_length=60, blank=True)
 	profile = models.CharField(max_length=256, blank=True)
 
 	def __unicode__(self):
-		return self.profile
+		return self.title
 
 class ContactInfoPair(models.Model):
 	"""docstring"""
@@ -19,7 +21,7 @@ class ContactInfoPair(models.Model):
 	key = models.CharField(max_length=75)
 	value = models.CharField(max_length=75)
 	def __unicode__(self):
-		return "%s : %s" % self.key, self.value
+		return "%s : %s" % (self.key, self.value)
 
 	def save(self, force_insert=False, force_update=False):
 		if not self.type:

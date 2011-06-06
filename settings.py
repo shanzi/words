@@ -58,7 +58,7 @@ MEDIA_URL = ''
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 HERE=os.path.dirname(os.path.dirname(__file__))
-STATIC_ROOT =os.path.join( HERE , 'static_root')
+STATIC_ROOT =os.path.join( HERE , 'words/static_root')
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
@@ -73,8 +73,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(HERE,'static/'),
-    '/Library/Python/2.6/site-packages/django/contrib/admin/media',
+    os.path.join(HERE,'words/static/'),
 )
 
 # List of finder classes that know how to find static files in
