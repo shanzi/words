@@ -71,7 +71,7 @@ table, table td {
 	overflow:hidden;
 }
 #links,#navwrapper {
-	padding:0 0 0 300px;
+	padding:0 0 0 200px;
 }
 	#links .aside {
 		float:left;
@@ -303,6 +303,8 @@ h3 {
 }
 .gravatar{
 	margin-left:37px;
+	width:60px;
+	height:60px;
 }
 
 .keywords{
