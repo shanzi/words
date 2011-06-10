@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "auth.user", "fields": {"username": "shanzi", "first_name": "Cloud", "last_name": "er", "is_active": true, "is_superuser": true, "is_staff": true, "last_login": "2011-06-06 21:20:45", "groups": [], "user_permissions": [], "password": "sha1$77fb6$23ad6fa7cfa435a4ebaa926f38d06c4e39a6b9dc", "email": "yun.er.run@gmail.com", "date_joined": "2011-06-05 22:03:41"}}]

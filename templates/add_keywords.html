@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Add keywords</title>
+	<link rel="stylesheet" href="/static/stylesheet/TextboxList.css" type="text/css" media="screen" charset="utf-8">
+	<script type="text/javascript" src='/static/js/jquery-1.4.2.min.js'></script>
+	<script type="text/javascript" src='/static/js/GrowingInput.js'></script>
+	<script type="text/javascript" src='/static/js/TextboxList.js'></script>
+</head>
+<body>
+	<h3>Add keywords about {{ user_name }}</h3>
+	<table>
+		{{ form.as_table }}
+		<tr>
+			<td colspan="2">
+				<input type="reset">
+				<input type="submit">
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript" charset="utf-8">
+		$('#id_keywords').textboxlist()
+	</script>
+</body>
+</html>
