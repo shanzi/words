@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import hashlib
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -9,9 +9,14 @@ class UserProfile(models.Model):
         title = models.CharField(max_length=75,default='Title')
         sub_header = models.CharField(max_length=60, blank=True)
 	profile = models.CharField(max_length=256, blank=True)
+        gravatar_img= models.CharField(max_length=200, blank=True)
 
 	def __unicode__(self):
 		return self.title
+
+        def save(self):
+            """docstring for save"""
+            self.gravatar_img="http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest()+'.jpg?s=100'
 
 class ContactInfoPair(models.Model):
 	"""docstring"""
