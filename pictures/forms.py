@@ -17,7 +17,7 @@ def save_image(size,dt,image):
     if not os.path.isdir(date_path):
         os.mkdir(date_path)
     image.save(os.path.join(date_path,'%s.jpg' % dt.strftime('%d%H%M')),'JPEG')
-    return "/media/%s/%s/%s.jpg" % (size,dt.strftime('%Y%m'),dt.strftime('%H%M'))
+    return "/media/%s/%s/%s.jpg" % (size,dt.strftime('%Y%m'),dt.strftime('%d%H%M'))
 
 
 class PictureModify(forms.Form):

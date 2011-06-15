@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-import re
-
+import re,os
+from django.conf import settings
 # Create your models here.
 class Picture(models.Model):
     user = models.ForeignKey(User, related_name='pictures')
@@ -28,6 +28,14 @@ class Picture(models.Model):
             return "/pic/%s/" % self.permalink
         else:
             return "/pic/%d/" % self.id
+    def delete(self):
+        try:
+            os.remove("%s/words%s" % (settings.HERE,str(self.fullsize)))
+            os.remove("%s/words%s" % (settings.HERE,str(self.medium)))
+            os.remove("%s/words%s" % (settings.HERE,str(self.thumbnail)))
+        except:
+            pass
+        return models.Model.delete(self)
 
 class Comment(models.Model):
     """docstring"""
