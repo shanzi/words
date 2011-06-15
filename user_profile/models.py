@@ -16,7 +16,8 @@ class UserProfile(models.Model):
 
         def save(self):
             """docstring for save"""
-            self.gravatar_img="http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest()+'.jpg?s=100'
+            self.gravatar_img="http://www.gravatar.com/avatar/" + hashlib.md5(self.user.email.lower()).hexdigest()+'.jpg?s=60'
+            models.Model.save(self)
 
 class ContactInfoPair(models.Model):
 	"""docstring"""
