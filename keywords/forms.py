@@ -1,10 +1,7 @@
 import django.forms as forms
-
-class AuthedKeywordsForm(forms.Form):
-    section = forms.ChoiceField()
-    keywords = forms.CharField()
+from words.keywords.models import KeywordSection
 
 class KeywordsFrom(forms.Form):
-    email = forms.EmailField()
-    keywords = forms.CharField()
+    section=forms.ChoiceField()
+    keywords=forms.CharField()
 
