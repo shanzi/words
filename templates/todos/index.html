@@ -1,16 +1,42 @@
 <!DOCTYPE HTML>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>To Dos</title>
-	<link rel="stylesheet" href="/static/todos/todos.css" type="text/css">
-	<script src="/static/js/jquery-1.4.2.min.js"></script>
-	<script src="/static/todos/todos.js"></script>
-</head>
-<body>
-	<div id="headbar">
-	</div>
-	<ul id="todolist"></ul>
-	<ul id="done"></ul>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>To Dos</title>
+        <link rel="stylesheet" href="/static/todos/todos.css" type="text/css">
+        <script src="/static/js/jquery-1.4.2.min.js"></script>
+        <script src="/static/todos/todos.js"></script>
+    </head>
+    <body>
+        <div id="headbar" >
+            <table border="0" width="100%" cellspacing='0'>
+                <tr height="32">
+                    <td id="todoicon" width="30"></td>
+                    <td id="inputwrap">
+                    <input id="todo" />
+                    </td>
+                    <td id="confirm" width="30"></td>
+                </tr>
+                <tr>
+                    <td colspan="3" height="34" style="padding:5px 0;">
+                        <img src="" alt="" />
+                        <div class="new"></div>
+                    </td>
+                </tr>
+            </table>
+            <div class="loading"></div>
+        </div>
+        <ul id="todolist"></ul>
+        <ul id="done"></ul>
+        <script type="text/javascript">
+            $('#headbar').click(function(){$('.loading').css({'opacity':0});$('table').css({'opacity':1});$('#headbar').css({'top':-36})});
+            $('.new').click(
+                    function(){
+                    if($('.new').toggleClass('cancel').hasClass('cancel')) 
+                    $('#headbar').css({'top':0});
+                    else $('#headbar').css({'top':-36});
+                    return false;
+                    })
+        </script>
+    </body>
 </html>
