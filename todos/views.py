@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response,get_object_or_404
 from django.http import HttpResponseRedirect,HttpResponseForbidden,HttpResponse,HttpResponseServerError
 from words.todos.models import ToDo
-
+from django.views.generic.simple import direct_to_template
 
 def fetch_todolist(user):
     return (user.todos.filter(done=False),user.todos.filter(done=True)[:5])
@@ -9,7 +9,7 @@ def fetch_todolist(user):
 def index(request):
     if not request.user.is_authenticated():
         return HttpRespenseRedirect('/todos/login/')
-    return render_to_response('todos/index.html')
+    return direct_to_template(request,'todos/index.html')
 
 def detail(request,todo_id):
     if not request.user.is_authenticated():
