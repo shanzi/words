@@ -3,5 +3,14 @@
 Pic@Pick
 {% endblock %}
 {% block stage %}
-stage
+<div class="dashboard">
+	<img src="{{ top_img }}" alt="" />
+	<div class='login'>
+		<form action="/login/">
+			{{ login_from.as_p }}
+			<input type="reset" />
+			<input type="submit" />
+		</form>
+	</div>
+</div>
 {% endblock %}
