@@ -4,37 +4,38 @@
         <meta charset="UTF-8">
         <title>To Dos</title>
         <script src="/static/js/jquery-1.4.2.min.js"></script>
+        <style>
+            body{margin:0;background:#e5ecf4}
+            #hb{position:fixed;top:0;-webkit-box-shadow:0 2px 5px #66f}
+            .il{background:url(/static/todos/il.jpg) no-repeat}
+            .im{background:url(/static/todos/im.jpg)}
+            .ir{background:url(/static/todos/ir.jpg) no-repeat}
+            .hbf .il{background:url(/static/todos/ifl.jpg) no-repeat}
+            .hbf .im{background:url(/static/todos/ifm.jpg)}
+            .hbf .ir{background:url(/static/todos/ifr.jpg) no-repeat}
+            #ntd{width:100%;height:1em;font-size:1em;background:transparent;color:white;outline:0;border:none}
+            #ld{background:url(/static/todos/loading.gif) repeat-x bottom rgba(0,0,0,0.5);border:solid 2px #fff;position:fixed;top:100px;left:5px;right:5px;color:white;text-shadow:1px 1px 1px #000;padding:1.5em 10px;-webkit-box-shadow:0 0 3px #000;-webkit-border-radius:4px;-webkit-transition:opacity 0.4s ease-in-out;opacity:1;}
+        </style>
     </head>
     <body>
-        <div id="headbar" >
-            <table border="0" width="100%" cellspacing='0'>
-                <tr height="32">
-                    <td id="todoicon" width="30"></td>
-                    <td id="inputwrap">
-                    <input id="todo" />
+            <table border="0" cellspacing='0' width="100%" id="hb">
+                <tr width="100%" height="50">
+                    <td width="18" class='il'></td>
+                    <td class='im'>
+                        <input id="ntd"/>
                     </td>
-                    <td id="confirm" width="30"></td>
-                </tr>
-                <tr>
-                    <td colspan="3" height="34" style="padding:5px 0;">
-                        <img src="" alt="" />
-                        <div class="new"></div>
-                    </td>
+                    <td width="120" class='ir'></td>
                 </tr>
             </table>
-            <div class="loading"></div>
-        </div>
+            <div id="ld">
+                正在加载中 Loading...
+            </div>
         <ul id="todolist"></ul>
         <ul id="done"></ul>
         <script type="text/javascript">
-            $('#headbar').click(function(){$('.loading').css({'opacity':0});$('table').css({'opacity':1});$('#headbar').css({'top':-36})});
-            $('.new').click(
-                    function(){
-                    if($('.new').toggleClass('cancel').hasClass('cancel')) 
-                    $('#headbar').css({'top':0});
-                    else $('#headbar').css({'top':-36});
-                    return false;
-                    })
+            $('#ntd').focus(function(){$('#hb').addClass('hbf')}).blur(function(){$('#hb').removeClass('hbf')});
+            $('.il,.im').click(function(){$('#ntd').focus()});
+
         </script>
     </body>
 </html>
