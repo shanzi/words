@@ -8,7 +8,7 @@ def fetch_todolist(user):
 
 def index(request):
     if not request.user.is_authenticated():
-        return HttpRespenseRedirect('/todos/login/')
+        return HttpResponseRedirect('/todos/login/')
     return direct_to_template(request,'todos/index.html')
 
 def detail(request,todo_id):
@@ -53,15 +53,15 @@ def highlight(request,todo_id):
 def unhighlight(request,todo_id):
     return handle_todo(request,todo_id,None,False)
 
-def todolist(request,todo_id):
+def todolist(request):
     if not request.user.is_authenticated():
         return HttpRespenseRedirect('/todos/login/')
     (todos,dones)=fetch_todolist(request.user)
     todosjson=''
     donejson=''
     for todo in todos:
-        todosjson=todosjson+"\n'%s':{'id':%d, 'highlight':%d}" % (str(todo),todo.id,int(todo.highlight))
+        todosjson=todosjson+"'%s':{'id':%d, 'highlight':%d}," % (str(todo),todo.id,int(todo.highlight))
     for done in dones:
-        donejson=donejson+"\n'%s':{'id':%d, 'highlight':%d}" % (str(done),done.id,int(done.highlight))
-    json='"{\'ToDos\':{%s},\'Dones\':{%s}}"' % (todosjson,donejson)
+        donejson=donejson+"'%s':{'id':%d, 'highlight':%d}," % (str(done),done.id,int(done.highlight))
+    json='({\'ToDos\':{%s},\'Dones\':{%s}})' % (todosjson,donejson)
     return HttpResponse(json,mimetype='text/json')

@@ -8,7 +8,7 @@ class ToDo(models.Model):
     highlight = models.BooleanField(default=False)
     done = models.BooleanField(default=False)
     def __unicode__(self):
-       return self.user
+       return self.name
     
     @models.permalink
     def get_absolute_url(self):

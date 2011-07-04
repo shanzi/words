@@ -3,5 +3,6 @@ from words.todos.views import *
 
 urlpatterns= patterns('',
         url(r'^$',index),
-        url(r'^post$',new),
+        url(r'^new$',new),
+        url(r'^list$',todolist),
         )
