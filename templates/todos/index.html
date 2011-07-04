@@ -81,15 +81,36 @@
         </table>
         <img id="img" src="/static/todos/A.png"style="display:none"/>
         <script type="text/javascript">
-            $.fn.todo_change=function(stat){
-                var ts=this;
-                $.get('/todos/'+stat+'/'+ this.data('id'),{},
-                        function(data){
-                        ts.css({'opacity':0})
-                        setTimeout(function(){ts.insertAfter(((stat=='done')?'#done':'#todo')+' dt')},400);                            })
-                    setTimeout(function(){ts.css({'opacity':null,'border':null})},500);
-                return this;
-            }
+            $('html').ajaxSend(function(event, xhr, settings) {
+                    function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                    }
+                    }
+                    }
+                    return cookieValue;
+                    }
+                    if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                    }
+                    });
+$.fn.todo_change=function(stat){
+    var ts=this;
+    $.get('/todos/'+stat+'/'+ this.data('id'),{},
+            function(data){
+            ts.css({'opacity':0})
+            setTimeout(function(){ts.insertAfter(((stat=='done')?'#done':'#todo')+' dt')},400);                            })
+        setTimeout(function(){ts.css({'opacity':null,'border':null})},500);
+    return this;
+}
 
 
 $('#ntd').focus(function(){$('#hb').addClass('hbf')}).blur(function(){$('#hb').removeClass('hbf')});
@@ -115,10 +136,10 @@ $(window).load(function(){
             var ts=$(this)
             $.get('/todos/undone/'+$(this).data('id'),
                 {},function(){
-                    ts.todo_change('undone')
+                ts.todo_change('undone')
                 })
             }})
-            $.ajax(
+        $.ajax(
                 {
 url:'/todos/list',
 type:'GET',
