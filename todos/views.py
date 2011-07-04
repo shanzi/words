@@ -4,7 +4,7 @@ from words.todos.models import ToDo
 from django.views.generic.simple import direct_to_template
 
 def fetch_todolist(user):
-    return (user.todos.filter(done=False),user.todos.filter(done=True)[:5])
+    return (user.todos.order_by('-id').filter(done=False),user.todos.order_by('-id').filter(done=True)[:5])
 
 def index(request):
     if not request.user.is_authenticated():
@@ -31,7 +31,7 @@ def handle_todo(request,todo_id,done=None,highlight=None):
         if highlight!=None:
             todo.highlight=highlight
         todo.save()
-        return HttpResponse('0:SUCCESS')
+        return HttpResponse(str(todo.id))
     except:
         return HttpResponseServerError()
 

@@ -5,4 +5,6 @@ urlpatterns= patterns('',
         url(r'^$',index),
         url(r'^new$',new),
         url(r'^list$',todolist),
+        url(r'^done/(\d+)$',done),
+        url(r'^undone/(\d+)$',undone),
         )
