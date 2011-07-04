@@ -25,7 +25,6 @@
             }
             #done li{background:url(/static/todos/d.png) 10px center no-repeat #fff}
             .tdl li div{overflow:hidden;white-space:nowrap} 
-            .hilt{background:url(/static/todos/hled.png) right center no-repeat,url(/static/todos/d.png) 10px center no-repeat #fff}
             #drop{
                 position:absolute;width:100%;
                 right:0;left:0;padding:10px;z-index:100;
@@ -101,7 +100,7 @@
                     // Only send the token to relative URLs i.e. locally.
                     xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
                     }
-                    });
+                    }).ajaxError(function(){alert('Error: Something is wrong with the application\nplease try to refresh the page.')});
 $.fn.todo_change=function(stat){
     var ts=this;
     $.get('/todos/'+stat+'/'+ this.data('id'),{},
@@ -111,63 +110,83 @@ $.fn.todo_change=function(stat){
         setTimeout(function(){ts.css({'opacity':null,'border':null})},500);
     return this;
 }
+$.fn.highlight=function(){
+    var ts=this;
+    url='';
+    if(ts.data('highlight'))url='un';
+    $.get('/todos/'+url+'highlight/'+this.data('id'),{},function(){
+            ts.css({'background':(url?null:'url(/static/todos/hled.png) right center no-repeat,url(/static/todos/nd.png) 10px center no-repeat #fff')})
+            ts.data('highlight',(url?0:1));}
+            )
+        return this}
 
 
-$('#ntd').focus(function(){$('#hb').addClass('hbf')}).blur(function(){$('#hb').removeClass('hbf')});
-$('.il,.im').click(function(){$('#ntd').focus()});
-$('#ld').click(function(){$(this).css({'display':'none'})})
-$(window).load(function(){
-        $('#todo li').live('click',function(e)
-            {
-            $(this).css({'border-color':'#52c3dd'}).attr('loading','true');
-            var ts=$(this)
-            if(e.pageX<60){
-            ts.todo_change('done')
-            }
-            else if(e.pageX>($('body').width()-60)){alert(2)}
-            else {
-            $('#tdo').text($(this).text())
-            $('#drop').add('#img').css({'top':($(this).offset()['top']+$(this).height()*3),'display':''}).data('id',$(this).data(id));
-            }
-            return false
-            })
-        $('#done li').live('click',function(e){
-            if(e.pageX<60){
-            var ts=$(this)
-            $.get('/todos/undone/'+$(this).data('id'),
-                {},function(){
-                ts.todo_change('undone')
-                })
-            }})
-        $.ajax(
-                {
-url:'/todos/list',
-type:'GET',
-dataType:'text',
-error:function(){alert('Error Loading Data!')},
-success:function(data){
-var obj=eval(data);
-$.each(obj['ToDos'],
-    function(txt,dt){
-    var lis=$('<li></li>').append($('<div></div>').text(txt)).data('id',dt['id']);
-    if(dt['highlight']) lis.addClass('hilt');
-    $('#todo').append(lis);
-    }
-    )
-$.each(obj['Dones'],
-    function(txt,dt){
-    var lis=$('<li></li>').append($('<div></div>').text(txt)).data('id',dt['id']);
-    if(dt['highlight']) lis.addClass('hilt');
-    $('#done').append(lis);
-    }
-    )
-$('#ld').css({"display":'none'});
-$('.tdl').css({"display":"block"});
-$('#hb').css({'top':0});
-}
-}
-)
-}
+        $('#ntd').focus(function(){$('#hb').addClass('hbf')}).blur(function(){$('#hb').removeClass('hbf')});
+        $('.il,.im').click(function(){$('#ntd').focus()});
+        $('#ld').click(function(){$(this).css({'display':'none'})})
+        $(window).load(function(){
+                $('#todo li').live('click',function(e)
+                    {
+                    $(this).css({'border-color':'#52c3dd'}).attr('loading','true');
+                    var ts=$(this)
+                    if(e.pageX<60){
+                    ts.todo_change('done')
+                    }
+                    else if(e.pageX>($('body').width()-60)){ts.highlight()}
+                    else {
+                    $('#tdo').text($(this).text())
+                    $('#drop').add('#img').css({'top':($(this).offset()['top']+$(this).height()*3),'display':''}).data('id',$(this).data(id));
+                    }
+                    return false
+                    })
+                $('#done li').live('click',function(e){
+                    if(e.pageX<60){
+                    var ts=$(this)
+                    $.get('/todos/undone/'+$(this).data('id'),
+                        {},function(){
+                        ts.todo_change('undone')
+                        })
+                    }})
+                $.get('/todos/list',{},
+                        function(data){
+                        var obj=eval(data);
+                        $.each(obj['ToDos'],
+                            function(txt,dt){
+                            var lis=$('<li></li>').append($('<div></div>').text(txt)).data('id',dt['id']);
+                            if(dt['highlight']) lis.css({'background':'url(/static/todos/hled.png) right center no-repeat,url(/static/todos/nd.png) 10px center no-repeat #fff'}).data('highlight',1);
+                            $('#todo').append(lis);
+                            }
+                            )
+                        $.each(obj['Dones'],
+                            function(txt,dt){
+                            var lis=$('<li></li>').append($('<div></div>').text(txt)).data('id',dt['id']);
+                            if(dt['highlight']) lis.addClass('hilt');
+                            $('#done').append(lis);
+                            }
+                            )
+
+                        $('.ir').click(function(){
+                            if($('#ntd').val().length<2) $('#ntd').focus()
+                            else{
+                            $.post('/todos/new',{'task':$('#ntd').val()},
+                                function(data){
+                                var obj=eval(data);
+                                var li=$('<li></li>').css({'opacity':0}).data('id',obj['id']).append($('<div></div>').text(obj['task'])).insertAfter('#todo dt');
+                                $('#ntd').val('').blur();
+                                setTimeout(function(){li.css({'opacity':null})},100);
+                                })
+                            }
+                            })
+                        $('#ntd').keypress(function(e){if(e.keyCode==13)$('.ir').click()})
+                            $('body').click(function(){$('#drop,#img').css({'display':'none'})
+                                    $('#todo li').css({'border':null})
+                                    })
+                        $('#ld').css({"display":'none'});
+                        $('.tdl').css({"display":"block"});
+                        $('#hb').css({'top':0});
+                        }
+                )
+        }
 )
 </script>
         </body>

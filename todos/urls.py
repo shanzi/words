@@ -7,4 +7,6 @@ urlpatterns= patterns('',
         url(r'^list$',todolist),
         url(r'^done/(\d+)$',done),
         url(r'^undone/(\d+)$',undone),
+        url(r'^highlight/(\d+)$',highlight),
+        url(r'^unhighlight/(\d+)$',unhighlight), 
         )

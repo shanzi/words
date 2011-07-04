@@ -11,14 +11,6 @@ def index(request):
         return HttpResponseRedirect('/todos/login/')
     return direct_to_template(request,'todos/index.html')
 
-def detail(request,todo_id):
-    if not request.user.is_authenticated():
-        return HttpRespenseRedirect('/todos/login/')
-    todo=get_object_or_404(Todo,id=todo_id)
-    if not todo.user.id==request.user.id:
-        return HttpResponseForbidden() 
-    return render_to_response('todos/detail.html',{'ToDo':todo})
-
 def handle_todo(request,todo_id,done=None,highlight=None):
     if not request.user.is_authenticated():
         return HttpRespenseRedirect('/todos/login/')
@@ -38,8 +30,9 @@ def handle_todo(request,todo_id,done=None,highlight=None):
 def new(request):
     if not request.user.is_authenticated():
         return HttpRespenseRedirect('/todos/login/')
-    pass
-
+    if request.POST:
+        todo=ToDo.objects.create(user=request.user,name=request.POST['task'])
+        return HttpResponse("({'task':'%s','id':%d})" % (todo.name,todo.id))
 
 def undone(request,todo_id):
     return handle_todo(request,todo_id,False)
@@ -64,4 +57,4 @@ def todolist(request):
     for done in dones:
         donejson=donejson+"'%s':{'id':%d, 'highlight':%d}," % (str(done),done.id,int(done.highlight))
     json='({\'ToDos\':{%s},\'Dones\':{%s}})' % (todosjson,donejson)
-    return HttpResponse(json,mimetype='text/json')
+    return HttpResponse(json)
