@@ -25,14 +25,6 @@
             }
             #done li{background:url(/static/todos/d.png) 10px center no-repeat #fff}
             .tdl li div{overflow:hidden;white-space:nowrap} 
-            #drop{
-                position:absolute;width:100%;
-                right:0;left:0;padding:10px;z-index:100;
-                background:rgba(255,255,255,0.9);-webkit-box-shadow:0 0 2px #000;
-            }
-            #drop td{padding:10px;}
-            #img{display:block;position:absolute;margin-top:-10px;left:50%;margin-left:-10px;z-index:101}
-            #tdo{border:solid 1px #ccc}
             #done li{opacity:0.4}
             #done li div{text-decoration:line-through}
 
@@ -49,7 +41,7 @@
             </tr>
         </table>
         <ul id='todo' class="tdl">
-            <dt>Task:</dt>
+            <dt id='task'>Task:</dt>
         </ul>
         <ul id="done" class='tdl'>
             <dt>Done:</dt>
@@ -57,28 +49,6 @@
         <div id="ld">
             正在加载中 Loading...
         </div>
-        <table id="drop" cellspacing="0" style="display:none">
-            <tr>
-                <td colspan="4" id="tdo">
-                    test
-                </td>
-            </tr>
-            <tr align="center">
-                <td>
-                    <a href=""><img src="/static/todos/sr.png" alt="Share" /></a>
-                </td>
-                <td>
-                    <a><img src="/static/todos/done.png" alt="Done" /></a>
-                </td>
-                <td>
-                    <a><img src="/static/todos/hl.png" alt="Highlight" /></a>
-                </td>
-                <td>
-                    <a><img src="/static/todos/del.png" alt="Delete" /></a>
-                </td>
-            </tr>
-        </table>
-        <img id="img" src="/static/todos/A.png"style="display:none"/>
         <script type="text/javascript">
             $('html').ajaxSend(function(event, xhr, settings) {
                     function getCookie(name) {
@@ -115,79 +85,84 @@ $.fn.highlight=function(){
     url='';
     if(ts.data('highlight'))url='un';
     $.get('/todos/'+url+'highlight/'+this.data('id'),{},function(){
-            ts.css({'background':(url?null:'url(/static/todos/hled.png) right center no-repeat,url(/static/todos/nd.png) 10px center no-repeat #fff')})
-            ts.data('highlight',(url?0:1));}
-            )
-        return this}
+            ts.css({'background':(url?null:'url(/static/todos/hled.png) right center no-repeat,url(/static/todos/nd.png) 10px center no-repeat #fff'),'opacity':0}).data('highlight',(url?0:1));
+            setTimeout(function(){
+            if(url){ts.removeClass('hl').insertAfter($('#todo .hl').last())}
+            else{
+            ts.insertAfter($('#task')).addClass('hl')}
+            },400)
+            setTimeout(function(){ts.css({'opacity':null})},500)
+            }
+         )
+        return this
+}
 
 
-        $('#ntd').focus(function(){$('#hb').addClass('hbf')}).blur(function(){$('#hb').removeClass('hbf')});
-        $('.il,.im').click(function(){$('#ntd').focus()});
-        $('#ld').click(function(){$(this).css({'display':'none'})})
-        $(window).load(function(){
-                $('#todo li').live('click',function(e)
-                    {
-                    $(this).css({'border-color':'#52c3dd'}).attr('loading','true');
-                    var ts=$(this)
-                    if(e.pageX<60){
-                    ts.todo_change('done')
+$('#ntd').focus(function(){$('#hb').addClass('hbf')}).blur(function(){$('#hb').removeClass('hbf')});
+$('.il,.im').click(function(){$('#ntd').focus()});
+$('#ld').click(function(){$(this).css({'display':'none'})})
+$(window).load(function(){
+        $('#todo li').live('click',function(e)
+            {
+            $(this).css({'border-color':'#52c3dd'}).attr('loading','true');
+            var ts=$(this)
+            if(e.pageX<60){
+            ts.todo_change('done')
+            }
+            else if(e.pageX>($('body').width()-60)){ts.highlight()}
+            else {
+            ts.find('div').css({'white-space':'normal'})
+            }
+            return false
+            })
+        $('#done li').live('click',function(e){
+            if(e.pageX<60){
+            var ts=$(this)
+            $.get('/todos/undone/'+$(this).data('id'),
+                {},function(){
+                ts.todo_change('undone')
+                })
+            }})
+        $.get('/todos/list',{},
+                function(data){
+                var obj=eval(data);
+                $.each(obj['ToDos'],
+                    function(txt,dt){
+                    var lis=$('<li></li>').append($('<div></div>').text(txt)).data('id',dt['id']);
+                    if(dt['highlight'])lis.css({'background':'url(/static/todos/hled.png) right center no-repeat,url(/static/todos/nd.png) 10px center no-repeat #fff'}).data('highlight',1).addClass('hl').insertAfter('#task')
+                    else $('#todo').append(lis);
                     }
-                    else if(e.pageX>($('body').width()-60)){ts.highlight()}
-                    else {
-                    $('#tdo').text($(this).text())
-                    $('#drop').add('#img').css({'top':($(this).offset()['top']+$(this).height()*3),'display':''}).data('id',$(this).data(id));
+                    )
+                $.each(obj['Dones'],
+                    function(txt,dt){
+                    var lis=$('<li></li>').append($('<div></div>').text(txt)).data('id',dt['id']);
+                    if(dt['highlight']) lis.addClass('hilt');
+                    $('#done').append(lis);
                     }
-                    return false
-                    })
-                $('#done li').live('click',function(e){
-                    if(e.pageX<60){
-                    var ts=$(this)
-                    $.get('/todos/undone/'+$(this).data('id'),
-                        {},function(){
-                        ts.todo_change('undone')
-                        })
-                    }})
-                $.get('/todos/list',{},
+                    )
+
+                $('.ir').click(function(){
+                    if($('#ntd').val().length<2) $('#ntd').focus()
+                    else{
+                    $.post('/todos/new',{'task':$('#ntd').val()},
                         function(data){
                         var obj=eval(data);
-                        $.each(obj['ToDos'],
-                            function(txt,dt){
-                            var lis=$('<li></li>').append($('<div></div>').text(txt)).data('id',dt['id']);
-                            if(dt['highlight']) lis.css({'background':'url(/static/todos/hled.png) right center no-repeat,url(/static/todos/nd.png) 10px center no-repeat #fff'}).data('highlight',1);
-                            $('#todo').append(lis);
-                            }
-                            )
-                        $.each(obj['Dones'],
-                            function(txt,dt){
-                            var lis=$('<li></li>').append($('<div></div>').text(txt)).data('id',dt['id']);
-                            if(dt['highlight']) lis.addClass('hilt');
-                            $('#done').append(lis);
-                            }
-                            )
-
-                        $('.ir').click(function(){
-                            if($('#ntd').val().length<2) $('#ntd').focus()
-                            else{
-                            $.post('/todos/new',{'task':$('#ntd').val()},
-                                function(data){
-                                var obj=eval(data);
-                                var li=$('<li></li>').css({'opacity':0}).data('id',obj['id']).append($('<div></div>').text(obj['task'])).insertAfter('#todo dt');
-                                $('#ntd').val('').blur();
-                                setTimeout(function(){li.css({'opacity':null})},100);
-                                })
-                            }
-                            })
-                        $('#ntd').keypress(function(e){if(e.keyCode==13)$('.ir').click()})
-                            $('body').click(function(){$('#drop,#img').css({'display':'none'})
-                                    $('#todo li').css({'border':null})
-                                    })
-                        $('#ld').css({"display":'none'});
-                        $('.tdl').css({"display":"block"});
-                        $('#hb').css({'top':0});
-                        }
-                )
-        }
+                        var li=$('<li></li>').css({'opacity':0}).data('id',obj['id']).append($('<div></div>').text(obj['task'])).insertAfter('#todo dt');
+                        $('#ntd').val('').blur();
+                        setTimeout(function(){li.css({'opacity':null})},100);
+                        })
+                    }
+                    })
+                $('#ntd').keypress(function(e){if(e.keyCode==13)$('.ir').click()})
+                    $('#todo li').css({'border':null})
+                })
+        $('body').click(function(){$('.tdl li').css({'border':null}).find('div').css({'white-space':null})})
+        $('#ld').css({"display":'none'});
+        $('.tdl').css({"display":"block"});
+        $('#hb').css({'top':0});
+}
 )
+
 </script>
         </body>
     </html>
