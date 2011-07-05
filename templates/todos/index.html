@@ -41,7 +41,7 @@
             </tr>
         </table>
         <ul id='todo' class="tdl">
-            <dt id='task'>Task:</dt>
+            <dt>Task:</dt>
         </ul>
         <ul id="done" class='tdl'>
             <dt>Done:</dt>
@@ -76,7 +76,13 @@ $.fn.todo_change=function(stat){
     $.get('/todos/'+stat+'/'+ this.data('id'),{},
             function(data){
             ts.css({'opacity':0})
-            setTimeout(function(){ts.insertAfter(((stat=='done')?'#done':'#todo')+' dt')},400);                            })
+            setTimeout(function(){
+                if(stat=='done') ts.insertAfter('#done dt')
+                else if(ts.data('highlight')) ts.insertAfter('#todo dt')
+                else ts.insertAfter($('#todo .hl').last())
+                },400);
+            })
+
         setTimeout(function(){ts.css({'opacity':null,'border':null})},500);
     return this;
 }
@@ -89,7 +95,7 @@ $.fn.highlight=function(){
             setTimeout(function(){
             if(url){ts.removeClass('hl').insertAfter($('#todo .hl').last())}
             else{
-            ts.insertAfter($('#task')).addClass('hl')}
+            ts.insertAfter($('#todo dt')).addClass('hl')}
             },400)
             setTimeout(function(){ts.css({'opacity':null})},500)
             }
@@ -129,7 +135,7 @@ $(window).load(function(){
                 $.each(obj['ToDos'],
                     function(txt,dt){
                     var lis=$('<li></li>').append($('<div></div>').text(txt)).data('id',dt['id']);
-                    if(dt['highlight'])lis.css({'background':'url(/static/todos/hled.png) right center no-repeat,url(/static/todos/nd.png) 10px center no-repeat #fff'}).data('highlight',1).addClass('hl').insertAfter('#task')
+                    if(dt['highlight'])lis.css({'background':'url(/static/todos/hled.png) right center no-repeat,url(/static/todos/nd.png) 10px center no-repeat #fff'}).data('highlight',1).addClass('hl').insertAfter('#todo dt')
                     else $('#todo').append(lis);
                     }
                     )
