@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>xiuxiu.de mobile | Login</title>
+    <style type="text/css">
+        body{background:url(/static/todos/bg.gif)}
+        #lw{background:#fff;padding:10px;max-width:210px;margin:40px auto;-webkit-box-shadow:0 0 3px #aaa}
+        ul{list-style:none;margin:0;padding:0;width:210px}
+        li{background:#bed6ec;padding:3px;-webkit-border-radius:3px;margin: 5px 0}
+        input{border:1px solid #9db2c4;width:200px;font-size:1.2em;margin:0;
+            background:#e5ecf4;-webkit-transition:background 0.2s ease-in;color:#999;}
+        #info{background:#fcc;color:#f66;border:solid 1px #f66;font-size:small}
+        input:focus{outline:none;background:#fff}
+        #rs,#sm{border:none;width:95px;height:34px}
+        #rs{background:url(/static/todos/reset.png)}
+        #sm{background:url(/static/todos/submit.png);float:right}
+    </style>
+</head>
+<body>
+    <div id="lw">
+
+        <img src="/static/todos/login.png" />
+        <form action=""  method="post">
+            <ul>
+                {% if info %}
+                <li id="info">{{ info }}</li>
+                {% endif %}
+                <li>
+                <input name="username" type="text" placeholder="Username"/>
+                </li>
+                <li>
+                <input name="password" type="password" placeholder="Password"/>
+                </li>
+                <li>
+                    <input type="reset" id="rs" value=""/>
+                    <input type="submit" id="sm" value=""/>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
