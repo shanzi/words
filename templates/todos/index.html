@@ -5,7 +5,7 @@
         <title>To Dos</title>
         <script src="/static/js/jquery-1.4.2.min.js"></script>
         <style>
-            body{margin:0;background:#e5ecf4}
+            body{margin:0;background:url(/static/todos/bg.gif)}
             dt{font-size:1.2em;color:#3f3;margin-bottom:1em;text-shadow:0 0 3px #000}
             #hb{position:fixed;top:-50px;-webkit-box-shadow:0 2px 5px #66f;
                 -webkit-transition:top 0.4s ease-out
@@ -27,10 +27,19 @@
             .tdl li div{overflow:hidden;white-space:nowrap} 
             #done li{opacity:0.4}
             #done li div{text-decoration:line-through}
-
+            #out{position:fixed;right:10px;bottom:-10px;border:solid 5px #fff;background:rgba(0,0,0,0.6);-webkit-box-shadow:0 0 3px #000;-webkit-border-radius:10px;padding:5px;display:none}
         </style>
     </head>
     <body>
+        <p style="display:none">
+        <img src="/static/todos/ifl.jpg"/>
+        <img src="/static/todos/ifm.jpg"/>
+        <img src="/static/todos/ifr.jpg"/>
+        <img src="/static/todos/hled.png"/>
+        <img src="/static/todos/hlt.png"/>
+        <img src="/static/todos/nd.png"/>
+        <img src="/static/todos/d.png"/>
+        </p>
         <table cellspacing='0' width="100%" id="hb">
             <tr width="100%" height="50">
                 <td width="18" class='il'></td>
@@ -49,6 +58,9 @@
         <div id="ld">
             正在加载中 Loading...
         </div>
+            <a href="/todos/login" id="out">
+                <img src="/static/todos/logout.png"/>
+            </a>
         <script type="text/javascript">
             $('html').ajaxSend(function(event, xhr, settings) {
                     function getCookie(name) {
@@ -153,7 +165,9 @@ $(window).load(function(){
                     $.post('/todos/new',{'task':$('#ntd').val()},
                         function(data){
                         var obj=eval(data);
-                        var li=$('<li></li>').css({'opacity':0}).data('id',obj['id']).append($('<div></div>').text(obj['task'])).insertAfter('#todo dt');
+                        var li=$('<li></li>').css({'opacity':0}).data('id',obj['id']).append($('<div></div>').text(obj['task']));
+                        if($('#todo .hl').length>0) $('#todo .hl').after(li)
+                        else li.insertAfter('#todo dt')
                         $('#ntd').val('').blur();
                         setTimeout(function(){li.css({'opacity':null})},100);
                         })
@@ -164,7 +178,7 @@ $(window).load(function(){
                 })
         $('body').click(function(){$('.tdl li').css({'border':null}).find('div').css({'white-space':null})})
         $('#ld').css({"display":'none'});
-        $('.tdl').css({"display":"block"});
+        $('.tdl,#out').css({"display":"block"});
         $('#hb').css({'top':0});
 }
 )

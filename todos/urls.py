@@ -9,4 +9,5 @@ urlpatterns= patterns('',
         url(r'^undone/(\d+)$',undone),
         url(r'^highlight/(\d+)$',highlight),
         url(r'^unhighlight/(\d+)$',unhighlight), 
+        url(r'^login/$',login),
         )
