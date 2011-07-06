@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width;initial-scale=1;user-scalable=no">
         <title>To Dos</title>
         <script src="/static/js/jquery-1.4.2.min.js"></script>
         <style>
@@ -90,12 +91,12 @@ $.fn.todo_change=function(stat){
             ts.css({'opacity':0})
             setTimeout(function(){
                 if(stat=='done') ts.insertAfter('#done dt')
-                else if(ts.data('highlight')) ts.insertAfter('#todo dt')
+                else if(ts.data('highlight')||$('#todo .hl').length<1) ts.insertAfter('#todo dt')
                 else ts.insertAfter($('#todo .hl').last())
-                },400);
+                },1000);
             })
 
-        setTimeout(function(){ts.css({'opacity':null,'border':null})},500);
+        setTimeout(function(){ts.css({'opacity':null,'border':null})},1200);
     return this;
 }
 $.fn.highlight=function(){
@@ -108,8 +109,8 @@ $.fn.highlight=function(){
             if(url){ts.removeClass('hl').insertAfter($('#todo .hl').last())}
             else{
             ts.insertAfter($('#todo dt')).addClass('hl')}
-            },400)
-            setTimeout(function(){ts.css({'opacity':null})},500)
+            },1000)
+            setTimeout(function(){ts.css({'opacity':null})},1200)
             }
          )
         return this
