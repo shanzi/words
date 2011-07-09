@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response,get_object_or_404
 from words.pictures.models import Picture
 from words.pictures.forms import PictureUpload
 from django.contrib.auth.decorators import login_required
@@ -10,6 +10,9 @@ def index(request):
     else:
         authed=False
     return render_to_response('pictures/index.html',locals())
+def picture(request,id):
+    image=get_object_or_404(Picture,id=id)
+    return render_to_response('pictures/picture.html',locals())
 
 
 @login_required
