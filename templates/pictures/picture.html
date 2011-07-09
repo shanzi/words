@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Photo : {{ image }}</title>
+        <style type="text/css">
+            body{
+                background-color:#eee;
+            }
+            #drop{
+                width:300px;
+                position:fixed;
+                bottom:5px;
+                left:50%;
+                margin-left:-150px;
+                border:1px solid #999;
+                background:url('http://www.gravatar.com/avatar/28d8427ab731e5556ec4be726699a825.jpg?s=150') no-repeat -60px center #fff;
+                -webkit-box-shadow:0 0 5px #999;
+                -moz-box-shadow:0 0 5px #999;
+                -o-box-shadow:0 0 5px #999;
+                box-shadow:0 0 5px #999;
+                -webkit-border-radius:3px;
+                -moz-border-radius:3px;
+                -ms-border-radius:3px;
+                -o-border-radius:3px;
+                border-radius:3px;
+                font-size:small;
+                max-height:150px;
+            }
+            #username{
+                width:80px;
+                color:white;
+                font-size:1.5em;
+                font-weight:bold;
+                text-shadow:0 0 2px #000;
+            }
+            #close{
+                position:absolute;
+                right:5px;
+                top:5px;
+                cursor:pointer;
+            }
+            #drop dt{
+                color:#007fff;
+                font-weight:bold;
+                font-size:1.2em;
+                margin-left:5px;
+            }
+            #drop dl{
+                margin:10px 0 5px 0;
+            }
+            #drop dd{
+                margin:0.2em 0;
+                color:#999;
+                margin:5px 0 0 5px;
+            }
+            #drop table{
+                background:rgba(255,255,255,0.5);
+                padding:5px 0 0 0;
+                -webkit-transition: background 0.5s ease-out;
+                -moz-transition: background 0.5s ease-out;
+                -o-transition: background 0.5s ease-out;
+                transition: background 0.5s ease-out;
+            }
+            #drop table:hover{
+                background:rgba(255,255,255,0);
+            }
+            #image{
+                margin:50px 0 0 0;
+                -webkit-box-shadow:0 0 5px #999;
+                -moz-box-shadow:0 0 5px #999;
+                -o-box-shadow:0 0 5px #999;
+                box-shadow:0 0 5px #999;
+            }
+        </style>
+    </head>
+    <body>
+        <table width="100%" height="100%" >
+            <tr>
+                <td valign="center" align="center" >
+                    <a href="{{ image.fullsize }}" >
+                        <img id="image" src="{{ image.medium }}" />
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <div id="drop">
+            <table cellspacing="5px" width="100%">
+                <tr>
+                    <td id="username" valign="bottom" align="right">{{ image.user }}</td>
+                    <td>
+                        <a id="close"><img src="/static/close.png"/></a>
+                        <dl>
+                            <dt>About this picture</dt>
+                            <dd>
+                            {% if image.detail %}
+                                {{ image.detail }}
+                            {% else %}
+                                Nothing has been said about this picture.    
+                            {% endif %}
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
