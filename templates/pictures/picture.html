@@ -7,17 +7,13 @@
         </script>
         <script type="text/javascript">
             $(document).ready(function(){
-                    $('#content li').hover(function(){
+                    $('#content li,#right li').hover(function(){
                         $('#lb').css({'top':$(this).position().top+5,'height':$(this).height()+5})
                         }
                     )
                     })
         </script>
         <style type="text/css" media="screen">
-            #logo{
-                height:100px;
-                margin-right:-10px;
-            }
             #title{
                 font-size:100px;
                 color:#ccc;
@@ -36,12 +32,11 @@
                 padding-left:0.2em;
             }
             #line{
-                border-right:1px solid #72e3ff;
+                border-right:1px solid #52c3dd;
             }
             #content{background:url(/static/left-no-color.jpg) no-repeat top right #fff;}
             #right{background:url(/static/right.jpg) no-repeat #fff;}
             #right ul{
-                margin-top:230px;
                 width:200px;
             }
             #gravatar{
@@ -51,7 +46,6 @@
                 -o-border-radius:10px;
                 height:60px;
                 width:60px;
-                border:solid #52c3dd 2px;
                 overflow:hidden;
 
             }
@@ -92,7 +86,6 @@
             <tr>
                 <td id="content">
                     <ul>
-                        <li id="logo"><img src="/static/xiu-logo.png" /></li>
                         <li id="title">{{ image }}</li>
                         <li id="user">BY:<a href="" >{{ image.user }}</a></li>
                         <li id="imgwp"><img src="{{ image.medium }}" /></li>
@@ -117,6 +110,7 @@
                     </div>
                 </td>
                 <td id="right" valign="top" align="left">
+                        <img src="/static/xiu-logo.png" />
                     <ul>
                         <li> 
                         <img id="gravatar" src="{{ image.user.profile.gravatar_img }}" />
