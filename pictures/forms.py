@@ -46,6 +46,7 @@ class PictureUpload(forms.Form):
             pic=Picture()
             pic.user=self.user
             dt=datetime.now()
+            (pic.width,pic.height)=img.size
             pic.fullsize=save_image('fullsize',dt,img)
             img.thumbnail((600,600),Image.ANTIALIAS)
             pic.medium=save_image('medium',dt,img)

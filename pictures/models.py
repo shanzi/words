@@ -11,6 +11,9 @@ class Picture(models.Model):
     title = models.CharField(max_length=64)
     detail = models.CharField(max_length=512, blank=True)
     permalink = models.CharField(max_length=64, blank=True)
+    width = models.IntegerField()
+    height = models.IntegerField()
+    uploaded_at = models.DateField(auto_now_add=True)
     
     def __unicode__(self):
         return self.title
