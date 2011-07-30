@@ -6,11 +6,30 @@
         <script type="text/javascript" src="/static/js/jquery-1.4.2.min.js">
         </script>
         <script type="text/javascript">
+            $.fn.extend({
+                    'show':function(sel){
+                    var ts=this;
+                    return ts.queue(
+                        function(){
+                        var s= sel?$(sel):ts;
+                        s.addClass('show');
+                        return ts.dequeue();
+                        }
+                        )
+                    },
+                    'wait':function(delay){
+                        var ts=this;
+                        return ts.queue(function()
+                            {setTimeout(function(){ts.dequeue()},(delay|500))}
+                            )
+                    }
+                    })
             $(document).ready(function(){
                     $('#content li,#right li').hover(function(){
                         $('#lb').css({'top':$(this).position().top+5,'height':$(this).height()+5})
                         }
-                    )
+                        )
+                    $('#title').delay(1000).show();
                     })
         </script>
         <style type="text/css" media="screen">
@@ -18,9 +37,11 @@
                 font-size:100px;
                 color:#ccc;
                 text-transform:uppercase;
+                height:100px;
             }
             #user{
                 font-size:60px;
+                height:60px;
             }
             #user a{border:none;}
             a,b{
@@ -46,20 +67,23 @@
                 -o-border-radius:10px;
                 height:60px;
                 width:60px;
+                margin:5px 0;
                 overflow:hidden;
 
             }
             body{
+                font-family:courier;
                 margin:0;
                 color:#666;
             }
             ul{
                 padding:0 10px ;
+                margin:0;
                 list-style:none;
             }
             input{border:1px #52c3dd solid;width:100%;}
             input:focus{border:2px #52c3dd solid;outline:none;}
-            li{margin:10px;}
+            li{margin:5px 0}
             #detail{color:#ccc;}
             #mainframe{
                 float:right;
@@ -78,6 +102,23 @@
                 top:0;
                 -webkit-transition:top 0.4s ease-out,height 0.4s ease-out;
             }
+            #image{
+                border:solid 1px #52c3dd;
+            }
+
+            #content li{
+                -webkit-transform:translate(-200px,0);
+            }
+            #right li{
+                -webkit-transform:translate(100px,0);
+            }
+            #content li,#right li{
+                -webkit-transition: -webkit-transform 0.4s ease-out;
+            }
+            #content li.show,#right li.show{
+                -webkit-transform: translate(0);
+            }
+            
 
         </style>
     </head>
@@ -88,7 +129,7 @@
                     <ul>
                         <li id="title">{{ image }}</li>
                         <li id="user">BY:<a href="" >{{ image.user }}</a></li>
-                        <li id="imgwp"><img src="{{ image.medium }}" /></li>
+                        <li id="imgwp"><img id="image" src="{{ image.medium }}" /></li>
                         <li>
                         <dl>
                             <dd>
