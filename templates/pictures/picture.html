@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Photo : {{ image }}</title>
-        <script type="text/javascript" src="/static/js/jquery-1.4.2.min.js">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
         </script>
         <script type="text/javascript">
             $.fn.extend({
@@ -29,7 +29,15 @@
                         $('#lb').css({'top':$(this).position().top+5,'height':$(this).height()+5})
                         }
                         )
-                    $('#title').delay(1000).show();
+                    $('#title').delay(800).show().delay(200).show('#user');
+                    $('#right li').delay(1200).each(
+                        function(count){
+                            $(this).delay(count*100).show();
+                        })
+                    $('#image').load(function(){$('#imgwp').show().delay(200).show('#detail')})
+                    setTimeout(function(){
+                        $('#image').attr({'src':$('#image').attr('lsrc')});
+                        },1500);
                     })
         </script>
         <style type="text/css" media="screen">
@@ -59,6 +67,7 @@
             #right{background:url(/static/right.jpg) no-repeat #fff;}
             #right ul{
                 width:200px;
+                min-height:500px;
             }
             #gravatar{
                 -webkit-border-radius:10px;
@@ -108,15 +117,29 @@
 
             #content li{
                 -webkit-transform:translate(-200px,0);
+                -moz-transform:translate(-200px,0);
+                -o-transform:translate(-200px,0);
+                transform:translate(-200px,0);
             }
             #right li{
                 -webkit-transform:translate(100px,0);
+                -moz-transform:translate(100px,0);
+                -o-transform:translate(100px,0);
+                transform:translate(100px,0);
             }
             #content li,#right li{
-                -webkit-transition: -webkit-transform 0.4s ease-out;
+                opacity:0;
+                -webkit-transition: -webkit-transform 0.6s ease-in-out,opacity 0.6s ease-in-out;
+                -moz-transition: -webkit-transform 0.6s ease-in-out,opacity 0.6s ease-in-out;
+                -o-transition: -webkit-transform 0.6s ease-in-out,opacity 0.6s ease-in-out;
+                transition: -webkit-transform 0.6s ease-in-out,opacity 0.6s ease-in-out;
             }
             #content li.show,#right li.show{
+                opacity:1;
                 -webkit-transform: translate(0);
+                -moz-transform: translate(0);
+                -o-transform: translate(0);
+                transform: translate(0);
             }
             
 
@@ -125,22 +148,18 @@
     <body>
         <table id="mainframe" cellspacing="0" cellpadding="0">
             <tr>
-                <td id="content">
+                <td id="content" valign="top">
                     <ul>
                         <li id="title">{{ image }}</li>
                         <li id="user">BY:<a href="" >{{ image.user }}</a></li>
-                        <li id="imgwp"><img id="image" src="{{ image.medium }}" /></li>
-                        <li>
-                        <dl>
-                            <dd>
+                        <li id="imgwp"><img id="image" lsrc="{{ image.medium }}" /></li>
+                        <li id="detail">
                             
                                 {% if image.detail %}
                                     {{ image.detail }}
                                 {% else %}
                                 <a href="url" >{{ image.user }}</a> said nothing about this picture.
                                 {% endif %}
-                            </dd>
-                        </dl>
                         </li>
                         <li id="rcd"></li>
                     </ul>
