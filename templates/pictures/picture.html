@@ -152,14 +152,14 @@
                 <td id="content" valign="top">
                     <ul>
                         <li id="title">{{ image }}</li>
-                        <li id="user">BY:<a href="" >{{ image.user }}</a></li>
+                        <li id="user">BY:<a href="{{ homepage }}" >{{ image.user }}</a></li>
                         <li id="imgwp"><img id="image" lsrc="{{ image.medium }}" /></li>
                         <li id="detail">
                             
                                 {% if image.detail %}
                                     {{ image.detail }}
                                 {% else %}
-                                <a href="url" >{{ image.user }}</a> said nothing about this picture.
+                                <a href="{{ homepage }}" >{{ image.user }}</a> said nothing about this picture.
                                 {% endif %}
                         </li>
                         <li id="rcd"></li>

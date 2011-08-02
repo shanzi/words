@@ -13,6 +13,7 @@ def index(request):
 
 def picture(request,id):
     image=get_object_or_404(Picture,id=id)
+    homepage=image.user.profile.homepage
     return render_to_response('pictures/picture.html',locals())
 
 
