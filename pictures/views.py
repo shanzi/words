@@ -10,6 +10,7 @@ def index(request):
     else:
         authed=False
     return render_to_response('pictures/index.html',locals())
+
 def picture(request,id):
     image=get_object_or_404(Picture,id=id)
     return render_to_response('pictures/picture.html',locals())
