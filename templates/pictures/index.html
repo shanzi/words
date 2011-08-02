@@ -6,15 +6,17 @@
         <style type="text/css">
             body{font-family:courier;color:#999}
             h1{margin:0;font-size:3em;}
+            h2{margin:0}
             #upload{
                 width:100px;
                 height:100px;
                 overflow:hidden;
                 cursor:pointer;
+                -webkit-transition:background-color 1s ease-in-out 1s;
             }
             #imgwp{
                 margin-top:0;
-                -webkit-transition:margin-top 0.8s ease-in-out;
+                -webkit-transition:margin-top 1s ease-in-out 1s;
             }
             #imgwp.uploading{
                 margin-top:-100px;
@@ -61,7 +63,11 @@
                 width:0;
                 height:0;
             }
-
+            #rainbow tr{
+                overflow:hidden;
+                height:100px;
+                -webkit-transition:opacity 0.4s ease-in-out;
+            }
         </style>
     </head>
     <body>
@@ -75,7 +81,7 @@
         <div id="mainframe">
             <img src="/static/rainbowhead.png" />
             <div id="content">
-                <table border="0">
+                <table id="rainbow" border="0">
                 </table>
                 <table border="0" width="100%">
                     <tr>
@@ -107,13 +113,28 @@
 
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
         <script type="text/javascript">
+            function callbackhandle(status,imageurl,title,detail){
+                if(status==0){
+                    $('<tr></tr>').append("<td width='120'><img src='"+imageurl+"' /></td>").append("<td><h2>"+title+"</h2><p>Say somethin about this picture here</p>").appendTo('#rainbow');
+                }
+                else{
+                    alert('Something is wrong when uploading a picture.\nPlease try again later!')
+                }
+                $('#imgwp').removeClass('uploading');
+                var colors=Array('green','blue','orange','pink','purple');
+                var color=colors[Math.floor(Math.random()*5)]
+                $('#upload').removeClass().addClass(color);
+                
 
+            }
             $('#upload').click(function(){
                     if(!$('#imgwp').hasClass('uploading')){
-                        $('#imgwp').toggleClass('uploading');
                         $('#id_image').bind('change',
                             function(){
-                               $('#uploadform').submit(); 
+                                $('#imgwp').addClass('uploading');
+                                setTimeout(function(){
+                                    $('#uploadform').submit(); 
+                                    },1000);
                             })
                         .click();
                     }

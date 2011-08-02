@@ -1,5 +1,11 @@
-<form enctype="multipart/form-data" method="post">
-    {% csrf_token %}
-{{ form.as_p }}
-</form>
-
+{% if image %}
+SUCCESS
+<script type="text/javascript">
+    window.parent.callbackhandle(0,'{{ image.thumbnail }}','{{ image }}');
+</script>
+{% else %}
+ERROR
+<script type="text/javascript">
+    window.parent.callbackhandle(1);
+</script>
+{% endif %}

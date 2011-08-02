@@ -53,7 +53,8 @@ class PictureUpload(forms.Form):
             img.thumbnail((100,100),Image.ANTIALIAS)
             pic.thumbnail=save_image('thumbnail',dt,img)
             pic.title=f.name
-            return pic.save()
+            pic.save()
+            return pic
         return None
 
 

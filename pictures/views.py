@@ -18,11 +18,9 @@ def picture(request,id):
 
 @login_required
 def upload(request):
+    img=None;
     if request.POST:
         form=PictureUpload(request.POST,request.FILES,request.user)
-        if(form.save()):
-            pass
-    else:
-        form=PictureUpload()
-    return render_to_response('pictures/upload.html',{'form':form})
+        img=form.save()
+    return render_to_response('pictures/upload.html',{'image':img})
 
