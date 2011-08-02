@@ -2,14 +2,11 @@ from django.shortcuts import render_to_response,get_object_or_404
 from words.pictures.models import Picture
 from words.pictures.forms import PictureUpload
 from django.contrib.auth.decorators import login_required
+from django.views.generic.simple import direct_to_template
 
+@login_required
 def index(request):
-    if request.user.is_authenticated():
-        authed=True
-        user=request.user
-    else:
-        authed=False
-    return render_to_response('pictures/index.html',locals())
+    return direct_to_template(request,'pictures/index.html')
 
 def picture(request,id):
     image=get_object_or_404(Picture,id=id)
