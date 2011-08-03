@@ -11,6 +11,9 @@ def index(request):
 def picture(request,id):
     image=get_object_or_404(Picture,id=id)
     homepage=image.user.profile.homepage
+    moreimages=image.user.pictures.order_by('?')[:10]
+    if(len(moreimages)<2):
+        moreimages=None
     return render_to_response('pictures/picture.html',locals())
 
 
