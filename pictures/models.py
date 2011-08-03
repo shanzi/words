@@ -13,7 +13,7 @@ class Picture(models.Model):
     permalink = models.CharField(max_length=64, blank=True)
     width = models.IntegerField()
     height = models.IntegerField()
-    uploaded_at = models.DateField(auto_now_add=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
     
     def __unicode__(self):
         return self.title
