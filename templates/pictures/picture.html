@@ -1,197 +1,123 @@
-<!DOCTYPE HTML>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Photo : {{ image }}</title>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
-        </script>
-        <script type="text/javascript">
-            $.fn.extend({
-                    'show':function(sel){
-                    var ts=this;
-                    return ts.queue(
-                        function(){
-                        var s= sel?$(sel):ts;
-                        s.addClass('show');
-                        return ts.dequeue();
-                        }
-                        )
-                    },
-                    'wait':function(delay){
-                        var ts=this;
-                        return ts.queue(function()
-                            {setTimeout(function(){ts.dequeue()},(delay|500))}
-                            )
-                    }
-                    })
-            $(document).ready(function(){
-                    $('#content li,#right li').hover(function(){
-                        $('#lb').css({'top':$(this).position().top+5,'height':$(this).height()+5})
-                        }
-                        )
-                    $('#title').delay(800).show().delay(200).show('#user');
-                    $('#right li').delay(1200).each(
-                        function(count){
-                            $(this).delay(count*100).show();
-                        })
-                    $('#image').load(function(){$('#imgwp').show().delay(200).show('#detail')})
-                    setTimeout(function(){
-                        $('#image').attr({'src':$('#image').attr('lsrc')});
-                        },1500);
-                    })
-        </script>
-        <style type="text/css" media="screen">
-            #title{
-                font-size:100px;
-                color:#ccc;
-                text-transform:uppercase;
-                height:100px;
-                white-space:nowrap;
-            }
-            #user{
-                font-size:60px;
-                height:60px;
-            }
-            #user a{border:none;}
-            a,b{
-                color:#52c3dd;
-                text-decoration:none;
-                font-weight:bold;
-                text-transform:uppercase;
-                border-left: solid 0.4em #52c3dd;
-                padding-left:0.2em;
-            }
-            #line{
-                border-right:1px solid #52c3dd;
-            }
-            #content{background:url(/static/left-no-color.jpg) no-repeat top right #fff;}
-            #right{background:url(/static/right.jpg) no-repeat #fff;}
-            #right ul{
-                width:200px;
-                min-height:500px;
-            }
-            #gravatar{
-                -webkit-border-radius:10px;
-                -moz-border-radius:10px;
-                -ms-border-radius:10px;
-                -o-border-radius:10px;
-                height:60px;
-                width:60px;
-                margin:5px 0;
-                overflow:hidden;
+{% extends "pictures/index.html" %}
+{% block title %}
+Photo: {{ image }}
+{% endblock %}
+{% block style %}
+body{font-family:courier;color:#999}
+#mainframe{
+width:720px;
+margin:0 auto 0 auto;
+}
+#footer{
+text-align:right;
+border-top:dashed 2px #ccc;
+}
+#content{
+min-height:400px;
+border-top:dashed 2px #ccc;
+}
+ul{
+margin:0;
+padding:0;
+}
+li,dt{
+list-style:none;
+margin:5px 0;
+padding:5px;
+text-align:right;
+}
+a,dt{
+color:#333;
+font-weight:bold;
+text-transform:uppercase;
+}
+h1{
+margin:0;
+}
+#day{
+font-size:3em;
+background:url(/static/images/day.png) no-repeat -10px #399dfa;
+color:#fff;
+}
+#time{
+font-size:1.5em;
+background:url(/static/images/time.png) no-repeat -10px 0 #39fa6a;
+color:#fff;
+}
+#moreimages{
+background-color:#eee;
+border:solid 1px #ccc;
+padding:10px;
+}
+#moreimages a{
+text-decoration:none;
+}
+#moreimageright{
+background: #fa3966;
+font-size:3em;
+color:#fff;
+}
 
-            }
-            body{
-                font-family:courier;
-                margin:0;
-                color:#666;
-            }
-            ul{
-                padding:0 10px ;
-                margin:0;
-                list-style:none;
-            }
-            input{border:1px #52c3dd solid;width:100%;}
-            input:focus{border:2px #52c3dd solid;outline:none;}
-            li{margin:5px 0}
-            #detail{color:#ccc;}
-            #mainframe{
-                float:right;
-                text-align:right;
-            }
-            #cpr{
-                background:#52c3dd;
-                color:#fff;
-                padding:5px;
-            }
-            #lb{
-                width:2px;
-                height:120px;
-                background:#52c3dd;
-                position:absolute;
-                top:0;
-                -webkit-transition:top 0.4s ease-out,height 0.4s ease-out;
-            }
-            #image{
-                border:solid 1px #52c3dd;
-            }
+{% endblock %}
 
-            #content li{
-                -webkit-transform:translate(-200px,0);
-                -moz-transform:translate(-200px,0);
-                -o-transform:translate(-200px,0);
-                transform:translate(-200px,0);
-            }
-            #right li{
-                -webkit-transform:translate(100px,0);
-                -moz-transform:translate(100px,0);
-                -o-transform:translate(100px,0);
-                transform:translate(100px,0);
-            }
-            #content li,#right li{
-                opacity:0;
-                -webkit-transition: -webkit-transform 0.6s ease-in-out,opacity 0.6s ease-in-out;
-                -moz-transition: -webkit-transform 0.6s ease-in-out,opacity 0.6s ease-in-out;
-                -o-transition: -webkit-transform 0.6s ease-in-out,opacity 0.6s ease-in-out;
-                transition: -webkit-transform 0.6s ease-in-out,opacity 0.6s ease-in-out;
-            }
-            #content li.show,#right li.show{
-                opacity:1;
-                -webkit-transform: translate(0);
-                -moz-transform: translate(0);
-                -o-transform: translate(0);
-                transform: translate(0);
-            }
-            
+{% block content %}
+<table width="100%" cellpadding="0">
+    <tr height="100">
+        <td width="120">
+            <img src="{{ image.thumbnail }}" alt="{{ image }}" />
+        </td>
+        <td align="left">
+            <h1>{{ image }}</h1>
+            {% if image.detail %}
+            {{ image.detail }}
+            {% else %}
+            <a href="{{ homepage }}">{{ image.user }}</a> said nothing.
+            {% endif %}
+        </td>
+        <td>
+                    By: <a href="{{ homepage }}">{{ image.user }}</a>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <a href="{{ image.fullsize }}">
+                <img src="{{ image.medium }}" alt="{{ image }}" />
+            </a>
+        </td>
+        <td valign="bottom">
+            <ul>
+                <dt>size</dt>
+                <li>{{ image.width }}x{{image.height}}</li>
+                <dt>date</dt>
+                <li>{{ image.uploaded_at|date:"Y,M" }}</li>
+                <li id="day">{{ image.uploaded_at|date:"d" }}</li>
+                <li id="time">{{ image.uploaded_at|date:"g A" }}</li>
+            </ul>
+        </td>
+    </tr>
+    {% if moreimages %}
+    <tr>
+        <th colspan="2">
+            More pictures by <a url="{{ homepage }}">{{ image.user }}</a>
+        </th>
+    </tr>
+    <tr>
+        <td id="moreimages" colspan="2">
+            {% for img in moreimages %}
+            <a href="/pictures/{{ img.id }}">
+                <img src="{{ img.thumbnail }}" alt="{{ img }}" />
+            </a>
+            {% endfor %}
+        </td>
+        <td id="moreimageright">
+           More 
+        </td>
+    </tr>
+    {% endif %}
+</table>
 
-        </style>
-    </head>
-    <body>
-        <table id="mainframe" cellspacing="0" cellpadding="0">
-            <tr>
-                <td id="content" valign="top">
-                    <ul>
-                        <li id="title">{{ image }}</li>
-                        <li id="user">BY:<a href="{{ homepage }}" >{{ image.user }}</a></li>
-                        <li id="imgwp"><img id="image" lsrc="{{ image.medium }}" /></li>
-                        <li id="detail">
-                            
-                                {% if image.detail %}
-                                    {{ image.detail }}
-                                {% else %}
-                                <a href="{{ homepage }}" >{{ image.user }}</a> said nothing about this picture.
-                                {% endif %}
-                        </li>
-                        <li id="rcd"></li>
-                    </ul>
-                </td>
-                <td id="line" rowspan="2">
-                    <div id="lb">
-                        
-                    </div>
-                </td>
-                <td id="right" valign="top" align="left">
-                        <img src="/static/xiu-logo.png" />
-                    <ul>
-                        <li> 
-                        <img id="gravatar" src="{{ image.user.profile.gravatar_img }}" />
-                        </li>
-                        <li id="detail">DETAIL</li>
-                        <li><b>Size:</b></li>
-                        <li>{{ image.width }}x{{ image.height }}</li>
-                        <li><b>Uploaded at:</b></li>
-                        <li>{{ image.uploaded_at }}</li>
-                        <li><b>Short url:</b></li>
-                        <li><input type="text" value="{{ image.short_url }}"/></li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td id="cpr">
-                    ant.isnot.tk © 2011
-                </td>
-            </tr>
-        </table>
-    </body>
-</html>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

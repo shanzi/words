@@ -2,8 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Rainbow Uploader</title>
+        <title>
+            {% block title %}
+            Rainbow Uploader
+            {% endblock %}
+        </title>
         <style type="text/css">
+            {% block style %}
             body{font-family:courier;color:#999}
             h1{margin:0;font-size:3em;}
             h2{margin:0}
@@ -68,19 +73,21 @@
                 height:100px;
                 -webkit-transition:opacity 0.4s ease-in-out;
             }
+            {% endblock %}
         </style>
     </head>
     <body>
-        <div class="hidden">
-            <iframe name="response"></iframe>
-            <form enctype="multipart/form-data" method="post" id='uploadform' target="response" action="/pictures/upload">
-                <input type='hidden' id='csrfmiddlewaretoken' name='csrfmiddlewaretoken' value='80f06e42520fcf810f58d83b8bb0ad71' />
-                <input type="file" name="image" id="id_image" />
-            </form>
-        </div>
         <div id="mainframe">
             <img src="/static/rainbowhead.png" />
             <div id="content">
+                {% block content %}
+                <div class="hidden">
+                    <iframe name="response"></iframe>
+                    <form enctype="multipart/form-data" method="post" id='uploadform' target="response" action="/pictures/upload">
+                        <input type='hidden' id='csrfmiddlewaretoken' name='csrfmiddlewaretoken' value='80f06e42520fcf810f58d83b8bb0ad71' />
+                        <input type="file" name="image" id="id_image" />
+                    </form>
+                </div>
                 <table id="rainbow" border="0">
                 </table>
                 <table border="0" width="100%">
@@ -105,6 +112,7 @@
                         <td><a href="" class="green" >Confirm and clear all</a></td>
                     </tr>
                 </table>
+                {% endblock %}
             </div>
             <div id="footer">
                 ant.isnot.tk © 2011
@@ -113,6 +121,7 @@
 
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
         <script type="text/javascript">
+            {% block script %}
             function callbackhandle(status,imageurl,title,detail){
                 if(status==0){
                     $('<tr></tr>').append("<td width='120'><img src='"+imageurl+"' /></td>").append("<td><h2>"+title+"</h2><p>Say somethin about this picture here</p>").appendTo('#rainbow');
@@ -123,22 +132,23 @@
                 $('#imgwp').removeClass('uploading');
                 var colors=Array('green','blue','orange','pink','purple');
                 var color=colors[Math.floor(Math.random()*5)]
-                $('#upload').removeClass().addClass(color);
-                
+                    $('#upload').removeClass().addClass(color);
+
 
             }
-            $('#upload').click(function(){
-                    if(!$('#imgwp').hasClass('uploading')){
-                        $('#id_image').bind('change',
-                            function(){
-                                $('#imgwp').addClass('uploading');
-                                setTimeout(function(){
-                                    $('#uploadform').submit(); 
-                                    },1000);
-                            })
-                        .click();
-                    }
-                    })
+$('#upload').click(function(){
+        if(!$('#imgwp').hasClass('uploading')){
+        $('#id_image').bind('change',
+            function(){
+            $('#imgwp').addClass('uploading');
+            setTimeout(function(){
+                $('#uploadform').submit(); 
+                },1000);
+            })
+        .click();
+        }
+        })
+{% endblock %}
 </script>
-    </body>
+</body>
 </html>
