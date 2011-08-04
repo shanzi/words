@@ -47,7 +47,21 @@
                 color:white;
                 text-decoration:none;
             }
-
+            #rainbow input{
+                height:1.3em;
+                font-size:1.5em;
+                width:50%;
+                color:#999;
+                border:none;
+                border-bottom:solid 1px #999;
+            }
+            #rainbow textarea{
+                height:2em;
+                width:90%;
+                color:#666;
+                margin-top:5px;
+                border:dashed 1px #ccc;
+            }
             .green{
                 background-color:#39fa6a;
             }
@@ -73,6 +87,12 @@
                 height:100px;
                 -webkit-transition:opacity 0.4s ease-in-out;
             }
+            .confirm{
+                width:50px;
+                color:#fff;
+                text-align:right;
+                padding:5px;
+            }
             {% endblock %}
         </style>
     </head>
@@ -87,7 +107,7 @@
                         <input type="file" name="image" id="id_image" />
                     </form>
                 </div>
-                <table id="rainbow" border="0">
+                <table id="rainbow" border="0" width="100%">
                 </table>
                 <table border="0" width="100%">
                     <tr>
@@ -120,21 +140,82 @@
 
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
         <script type="text/javascript">
-            {% block script %}
-            function callbackhandle(status,imageurl,title,detail){
-                if(status==0){
-                    $('<tr></tr>').append("<td width='120'><img src='"+imageurl+"' /></td>").append("<td><h2>"+title+"</h2><p>Say somethin about this picture here</p>").appendTo('#rainbow');
-                }
-                else{
-                    alert('Something is wrong when uploading a picture.\nPlease try again later!')
-                }
-                $('#imgwp').removeClass('uploading');
-                var colors=Array('green','blue','orange','pink','purple');
-                var color=colors[Math.floor(Math.random()*5)]
-                    $('#upload').removeClass().addClass(color);
+            $('html').ajaxSend(function(event, xhr, settings) {
+                    function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                    }
+                    }
+                    }
+                    return cookieValue;
+                    }
+                    if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                    }
+                    });
+{% block script %}
+function callbackhandle(status,imageid,imageurl,title){
+    if(status==0){
+        var ec=$('<td></td>').addClass('confirm').addClass($('#upload').attr('class')).append('<a>Edit</a>')
+            $('<tr></tr>').append("<td width='120'><a href='/pictures/"+imageid+"'><img src='"+imageurl+"' /></a></td>")
+            .append("<td><h2>"+title+"</h2><p>Say something about this picture here</p></td>")
+            .append(ec)
+            .appendTo('#rainbow');
+    }
+    else{
+        alert('Something is wrong when uploading a picture.\nPlease try again later!')
+    }
+    $('#imgwp').removeClass('uploading');
+    var colors=Array('green','blue','orange','pink','purple');
+    var color=colors[Math.floor(Math.random()*5)]
+        $('#upload').removeClass().addClass(color);
 
 
+}
+$('.confirm a').live('click',function(){
+        var root=$(this).parents('tr');
+        var title=root.find('h2');
+        var detail=root.find('p');
+        var cancel=$('<a>No</a>').click(
+            function(){
+            root.find('input').replaceWith('<h2>'+root.data('title')+'</h2>');
+            root.find('textarea').replaceWith('<p>'+root.data('detail')+'</p>');
+            $(this).parent().empty().append('<a>Edit</a>');
             }
+            )
+        if($(this).text()=='Edit'){
+        root.data('title',title.text());
+        root.data('detail',detail.text());
+        $(this).text('Yes').parent().append('<br/>').append(cancel);
+        title.replaceWith($('<input/>').val(title.text()));
+        detail.replaceWith($('<textarea></textarea>').val(detail.text()));
+        root.find('input').focus();
+        }
+        else if($(this).text()=='Yes'){
+        root.data('title',root.find('input').val());
+        root.data('detail',root.find('textarea').val());
+        cancel.click();
+        root.find('.confirm').html('<img src="/static/images/loading.gif"/>')
+
+            $.post(root.find('img').parent().attr('href'),{'title':root.find('h2').text(),
+                    'detail':root.find('p').text()},
+                    function(data){
+                    var d=eval(data)
+                    root.find('h2').text(d[0]);
+                    root.find('p').text(d[1]);
+                    root.find('.confirm').html('<a>Edit</a>');
+                    }
+                  )
+        }
+})
 $('#upload').click(function(){
         if(!$('#imgwp').hasClass('uploading')){
         $('#id_image').bind('change',

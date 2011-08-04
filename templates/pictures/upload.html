@@ -1,7 +1,7 @@
 {% if image %}
 SUCCESS
 <script type="text/javascript">
-    window.parent.callbackhandle(0,'{{ image.thumbnail }}','{{ image }}');
+    window.parent.callbackhandle(0,{{image.id}},'{{ image.thumbnail }}','{{ image }}');
 </script>
 {% else %}
 ERROR

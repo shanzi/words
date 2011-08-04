@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response,get_object_or_404
+from django.http import HttpResponse
 from words.pictures.models import Picture
 from words.pictures.forms import PictureUpload
 from django.contrib.auth.decorators import login_required
@@ -10,6 +11,13 @@ def index(request):
 
 def picture(request,id):
     image=get_object_or_404(Picture,id=id)
+    if request.POST:
+        if request.POST.has_key('title'):
+            image.title=request.POST['title']
+        if request.POST.has_key('detail'):
+            image.detail=request.POST['detail']
+        image.save()
+        return HttpResponse('(["%s","%s"])' % (image.title,image.detail))
     homepage=image.user.profile.homepage
     moreimages=image.user.pictures.order_by('?')[:10]
     if(len(moreimages)<2):
