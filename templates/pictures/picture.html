@@ -57,6 +57,34 @@ background: #fa3966;
 font-size:3em;
 color:#fff;
 }
+.edit{
+background-color:#eee;
+border:solid 1px #ccc;
+margin:5px 0;
+}
+
+.edit a{
+cursor:pointer;
+color:#399dfa;
+}
+#rainbow input{
+height:1.3em;
+font-size:1.5em;
+width:50%;
+color:#999;
+border:none;
+border-bottom:solid 1px #999;
+}
+#rainbow textarea{
+height:2em;
+width:90%;
+color:#666;
+margin-top:5px;
+border:dashed 1px #ccc;
+}
+#del{
+color:red;
+}
 
 {% endblock %}
 
@@ -64,18 +92,27 @@ color:#fff;
 <table width="100%" cellpadding="0">
     <tr height="100">
         <td width="120">
-            <img src="{{ image.thumbnail }}" alt="{{ image }}" />
+            <a href="/pictures/{{ image.id }}">
+                <img src="{{ image.thumbnail }}" alt="{{ image }}" />
+            </a>
         </td>
-        <td align="left">
+        <td align="left" id="rainbow">
             <h1>{{ image }}</h1>
             {% if image.detail %}
-            {{ image.detail }}
+            <p>{{ image.detail }}</p>
             {% else %}
-            <a href="{{ homepage }}">{{ image.user }}</a> said nothing.
+            <p><a href="{{ homepage }}">{{ image.user }}</a> said nothing.</p>
             {% endif %}
         </td>
-        <td>
-                    By: <a href="{{ homepage }}">{{ image.user }}</a>
+        <td valign="top">
+            By: <a href="{{ homepage }}">{{ image.user }}</a>
+            {% if editable %}
+            <div class="edit">
+                <a>Edit</a>
+            </div>
+            <a href="/pictures/delete/{{ image.id }}" id="del">Delete</a>
+
+            {% endif %}
         </td>
     </tr>
     <tr>
@@ -110,7 +147,7 @@ color:#fff;
             {% endfor %}
         </td>
         <td id="moreimageright">
-           More 
+            More 
         </td>
     </tr>
     {% endif %}
@@ -119,5 +156,45 @@ color:#fff;
 {% endblock %}
 
 {% block script %}
+$('.edit a').live('click',function(){
+var root=$(this).parents('tr');
+var title=root.find('h1');
+var detail=root.find('p');
+var cancel=$('<a>cancel</a>').click(
+function(){
+root.find('input').replaceWith('<h1>'+root.data('title')+'</h1>');
+root.find('textarea').replaceWith('<p>'+root.data('detail')+'</p>');
+$(this).parent().empty().append('<a>Edit</a>');
+}
+)
+if($(this).text()=='Edit'){
+root.data('title',title.text());
+root.data('detail',detail.html());
+$(this).text('confirm').parent().append('<br/>').append(cancel);
+title.replaceWith($('<input/>').val(title.text()));
+detail.replaceWith($('<textarea></textarea>').val(detail.text()));
+root.find('input').focus();
+}
+else if($(this).text()=='confirm'){
+root.data('title',root.find('input').val());
+root.data('detail',root.find('textarea').val());
+cancel.click();
+root.find('.edit').html('<img src="/static/images/loading.gif"/>')
 
+$.post(root.find('img').parent().attr('href'),{'title':root.find('h1').text(),
+'detail':root.find('p').text()},
+function(data){
+var d=eval(data)
+root.find('h1').text(d[0]);
+if(d[1] && d[1].length>0) root.find('p').text(d[1]);
+else root.find('p').html('<a href="{{ homepage }}">{{ image.user }}</a> said nothing.')
+root.find('.edit').html('<a>Edit</a>');
+}
+)
+}
+})
+$('#rainbow h1,#rainbow p').click(function(){
+var ref=$('.edit a')
+if(ref.text()=='Edit') ref.click();
+})
 {% endblock %}
