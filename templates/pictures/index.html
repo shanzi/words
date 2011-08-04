@@ -46,6 +46,7 @@
                 border-radius:0.5em;
                 color:white;
                 text-decoration:none;
+                cursor:pointer;
             }
             #rainbow input{
                 height:1.3em;
@@ -128,7 +129,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><a href="" class="green" >Confirm and clear all</a></td>
+                        <td><a id="ccall" class="green" >Confirm and clear all</a></td>
                     </tr>
                 </table>
                 {% endblock %}
@@ -228,11 +229,16 @@ $('#upload').click(function(){
         .click();
         }
         })
-$('#rainbow h1,#rainbow p').live('click',function(){
-var ref=$('.edit a')
+$('#rainbow h2,#rainbow p').live('click',function(){
+var ref=$(this).parents('tr').find('.edit a')
 if(ref.text()=='Edit') ref.click();
 })
-
+$('#ccall').click(function(){
+        $('#rainbow a').each(function(c,a){
+            if($(a).text()=='Yes') $(a).click()
+            })
+$('#rainbow').empty()
+})
 {% endblock %}
 </script>
 </body>
