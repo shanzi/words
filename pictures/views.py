@@ -11,7 +11,11 @@ def index(request):
 
 def picture(request,id):
     image=get_object_or_404(Picture,id=id)
-    if request.POST:
+    if request.user.is_authenticated() and request.user == image.user:
+        editable=True
+    else:
+        editable=False
+    if request.POST and editable:
         if request.POST.has_key('title'):
             image.title=request.POST['title']
         if request.POST.has_key('detail'):
