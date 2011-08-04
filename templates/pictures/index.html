@@ -87,7 +87,7 @@
                 height:100px;
                 -webkit-transition:opacity 0.4s ease-in-out;
             }
-            .confirm{
+            .edit{
                 width:50px;
                 color:#fff;
                 text-align:right;
@@ -164,7 +164,7 @@
 {% block script %}
 function callbackhandle(status,imageid,imageurl,title){
     if(status==0){
-        var ec=$('<td></td>').addClass('confirm').addClass($('#upload').attr('class')).append('<a>Edit</a>')
+        var ec=$('<td></td>').addClass('edit').addClass($('#upload').attr('class')).append('<a>Edit</a>')
             $('<tr></tr>').append("<td width='120'><a href='/pictures/"+imageid+"'><img src='"+imageurl+"' /></a></td>")
             .append("<td><h2>"+title+"</h2><p>Say something about this picture here</p></td>")
             .append(ec)
@@ -180,7 +180,7 @@ function callbackhandle(status,imageid,imageurl,title){
 
 
 }
-$('.confirm a').live('click',function(){
+$('.edit a').live('click',function(){
         var root=$(this).parents('tr');
         var title=root.find('h2');
         var detail=root.find('p');
@@ -203,7 +203,7 @@ $('.confirm a').live('click',function(){
         root.data('title',root.find('input').val());
         root.data('detail',root.find('textarea').val());
         cancel.click();
-        root.find('.confirm').html('<img src="/static/images/loading.gif"/>')
+        root.find('.edit').html('<img src="/static/images/loading.gif"/>')
 
             $.post(root.find('img').parent().attr('href'),{'title':root.find('h2').text(),
                     'detail':root.find('p').text()},
@@ -211,7 +211,7 @@ $('.confirm a').live('click',function(){
                     var d=eval(data)
                     root.find('h2').text(d[0]);
                     root.find('p').text(d[1]);
-                    root.find('.confirm').html('<a>Edit</a>');
+                    root.find('.edit').html('<a>Edit</a>');
                     }
                   )
         }
@@ -228,6 +228,11 @@ $('#upload').click(function(){
         .click();
         }
         })
+$('#rainbow h1,#rainbow p').live('click',function(){
+var ref=$('.edit a')
+if(ref.text()=='Edit') ref.click();
+})
+
 {% endblock %}
 </script>
 </body>
