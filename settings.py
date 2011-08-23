@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'words.pictures',
     'south',
+    'words.socialauth',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'words.keywords',
