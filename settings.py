@@ -158,3 +158,12 @@ LOGGING = {
     }
 }
 
+# SNS auth 
+TWITTER_CONSUMER_KEY='dhnExGaoiIx5r1OXHHa8tg'
+TWITTER_CONSUMER_SECRET='7fVMn5GFBrq4tH82wANDnkaWSJ73lWX9nXKBbUUvbM'
+
+
+AUTHENTICATION_BACKEND = (
+    'django.contrib.auth.backends.ModelBackend',
+    'socialauth.auth_backends.TwitterBackend',
+    )
