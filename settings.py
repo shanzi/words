@@ -131,6 +131,7 @@ INSTALLED_APPS = (
     'words.user_profile',
     'words.links',
     'words.todos',
+    'words.shorturls',
 )
 
 
@@ -157,6 +158,9 @@ LOGGING = {
         },
     }
 }
+
+# Short_Url
+SHORT_URL_ROOT='isnot.tk'
 
 # SNS auth 
 TWITTER_CONSUMER_KEY='dhnExGaoiIx5r1OXHHa8tg'

@@ -2,6 +2,8 @@ from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
 from django.conf.urls.static import static
 from words.views import *
+from words.shorturls.views import expand_shorturl,new_shorturl
+
 
 
 # Uncomment the next two lines to enable the admin:
@@ -9,20 +11,21 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'words.views.home', name='home'),
-    url(r'^pictures/', include('words.pictures.urls')),
-    url(r'^todos/',include('words.todos.urls')),
+        # Examples:
+        # url(r'^$', 'words.views.home', name='home'),
+        url(r'^pictures/', include('words.pictures.urls')),
+        url(r'^todos/',include('words.todos.urls')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+        # Uncomment the admin/doc line below to enable admin documentation:
+        # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
-    url(r'^$',index),
-    url(r'^sns/',include('words.socialauth.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^keywords/',include('words.keywords.urls')),
-
-)
+        # Uncomment the next line to enable the admin:
+        url(r'^$',index),
+        url(r'^sns/',include('words.socialauth.urls')),
+        url(r'^admin/', include(admin.site.urls)),
+        url(r'^keywords/',include('words.keywords.urls')),
+        url(r'^shorturl/',new_shorturl),
+        url(r'^([a-zA-z0-9_]{1,5})$',expand_shorturl),
+        )
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT )
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT )
