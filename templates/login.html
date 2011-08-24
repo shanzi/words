@@ -9,6 +9,11 @@ Login
 Login with your username and password.
 <form action="" method="post" accept-charset="utf-8">
     <ul>
+        {% if form.errors %}
+        <li id="error">
+        Sorry, that's not a valid username or password.
+        </li>
+        {% endif %}
         <li>
                 <input type="text" name="username" placeholder="Name">
         </li>
@@ -50,6 +55,12 @@ Login with your username and password.
         overflow:hidden;
         text-align:right;
        }
+    #error{
+        background:#faa;
+        border:1px solid #f99;
+        color:white;
+        padding:0.2em 0;
+    }
         
 </style>
 {% endblock %}
