@@ -1,0 +1,61 @@
+{% extends "pictures/index.html" %}
+{% block title %}
+Login
+{% endblock %}
+{% block content %}
+<h1>
+Login
+</h1>
+Login with your username and password.
+<form action="" method="post" accept-charset="utf-8">
+    <ul>
+        <li>
+                <input type="text" name="username" placeholder="Name">
+        </li>
+        <li>
+                <input type="password" name="password" placeholder="Password">
+        </li>
+        <li id="controller">
+                <input class="orange" type="reset" value="Reset"/>
+                <input class="green" type="submit" value="Submit"/>
+        </li>
+    </ul>
+        </tr>
+    </table>
+</form>
+<style type="text/css">
+    ul{
+        padding:0;
+        list-style:none;
+        margin:40px 0;
+    }
+    input{
+        border:1px solid #eee;
+        width:200px;
+        height:30px;
+        font-size:24px;
+        margin:5px 0;
+    }
+    input:focus{
+        border:1px solid #999;
+        outline:none;
+    }
+    
+    #controller input{
+        width:100px;
+        color:white;
+        cursor:pointer;
+        border:none;
+        font-size:2em;
+        overflow:hidden;
+        text-align:right;
+       }
+        
+</style>
+{% endblock %}
+{% block google_analytic %}
+
+{% endblock %}
+{% block script %}
+
+{% endblock %}

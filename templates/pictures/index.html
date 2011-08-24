@@ -240,6 +240,7 @@ $('#ccall').click(function(){
 $('#rainbow').empty()
 })
 {% endblock %}
+{% block google_analytic %}
 </script>
 <script type="text/javascript">
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -251,5 +252,6 @@ $('#rainbow').empty()
 				pageTracker._trackPageview();
                 } catch(err) {}
 </script>
+{% endblock %}
 </body>
 </html>
