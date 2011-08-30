@@ -1,0 +1,51 @@
+{% extends "pictures/index.html" %}
+
+{% block content %}
+<h1>Short URL</h1>
+<p>
+Shorten your long link into a short URL with in 10 letters which starts with 
+<a id="root_link" href="http://{{ short_url_root }}/">{{ short_url_root }}/</a>.
+</p>
+<form action="" method="post" accept-charset="utf-8">
+    <input type="text" name="url" placeholder="Paste your LONG LINK here!" />
+</form>
+<div id="geturl_wrapper">
+    <div id="geturl_inner">
+        <div id="geturl" class="blue">Get Short URL</div>
+        <div id="loading" class="orange"></div>
+        <div id="shorturl" class="green"></div>
+    </div>
+</div>
+{% endblock %}
+{% block extern_style %}
+<style type="text/css">
+    #root_link{
+        color:#99F;
+        font-size:1.2em;
+    }
+    form{
+        margin-top:220px;
+    }
+    input{
+        height:30px;
+        font-size:24px;
+        color:#999;
+        width:715px;
+        border:1px solid #ccc;
+    }
+    #geturl_inner{
+        overflow:hidden;
+        height:1em;
+    }
+    #geturl_inner div{
+        color:white;
+        text-align:center;
+        height:1em;
+        width:100%;
+    }
+    #geturl,#shorturl{
+        cursor:pointer;
+    }
+</style>
+{% endblock %}
+
