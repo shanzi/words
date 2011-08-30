@@ -3,11 +3,10 @@ from django.http import HttpResponse
 from words.pictures.models import Picture
 from words.pictures.forms import PictureUpload
 from django.contrib.auth.decorators import login_required
-from django.views.generic.simple import direct_to_template
 
 @login_required
 def index(request):
-    return direct_to_template(request,'pictures/index.html')
+    return render_to_response(request,'pictures/index.html')
 
 def picture(request,id):
     image=get_object_or_404(Picture,id=id)
