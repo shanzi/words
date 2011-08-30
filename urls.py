@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
 from django.conf.urls.static import static
 from words.views import *
-from words.shorturls.views import expand_shorturl,new_shorturl
+from words.shorturls.views import expand_shorturl,new_shorturl,shorturl_index
 from django.contrib.auth.views import login,logout
 
 
@@ -26,7 +26,8 @@ urlpatterns = patterns('',
         url(r'^sns/',include('words.socialauth.urls')),
         url(r'^admin/', include(admin.site.urls)),
         url(r'^keywords/',include('words.keywords.urls')),
-        url(r'^shorturl/',new_shorturl),
+        url(r'^shorturl/$',shorturl_index),
+        url(r'^shorturl/new/$',new_shorturl),
         url(r'^accounts/login/$',login,{'template_name':'login.html'}),
         url(r'^([a-zA-z0-9_]{1,5})$',expand_shorturl),
         )

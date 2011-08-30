@@ -1,7 +1,9 @@
 # Create your views here.
 from django.http import HttpResponse,HttpResponseRedirect,HttpResponseBadRequest
 from words.shorturls.models import *
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404,render_to_response
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 import re
 
 def make_shorturl(n):
@@ -35,3 +37,7 @@ def new_shorturl(request):
         shorturl.url=make_shorturl(shorturl.id)
         shorturl.save()
     return HttpResponse("({'origin':'%s','shorturl':'%s'})" % (url,str(shorturl)))
+
+@login_required
+def shorturl_index(request):
+    return render_to_response('shorturl.html',{'short_url_root':settings.SHORT_URL_ROOT})
