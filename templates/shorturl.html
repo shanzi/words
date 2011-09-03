@@ -1,4 +1,7 @@
 {% extends "pictures/index.html" %}
+{% block title %}
+Short URL
+{% endblock %}
 
 {% block content %}
 <h1>Short URL</h1>
@@ -7,14 +10,13 @@ Shorten your long link into a short URL with in 10 letters which starts with
 <a id="root_link" href="http://{{ short_url_root }}/">{{ short_url_root }}/</a>.
 If the given link is already a short one, it will be expanded to its origin.
 </p>
-<form action="" method="post" accept-charset="utf-8">
-    <input type="text" name="url" placeholder="Paste your LONG LINK here!" />
+<form id="linkf" action="" method="post" accept-charset="utf-8">
+    <input type="text" name="url" id="link" placeholder="Paste your LINK here!" />
 </form>
 <div id="geturl_wrapper">
     <div id="geturl_inner">
-        <div id="geturl" class="blue">Get Short URL</div>
-        <div id="loading" class="orange"></div>
-        <div id="shorturl" class="green"></div>
+        <div id="geturl" class="blue">Waiting</div>
+        <div id="shorturl" class="green">&nbsp;</div>
     </div>
 </div>
 {% endblock %}
@@ -25,7 +27,7 @@ If the given link is already a short one, it will be expanded to its origin.
         font-size:1.2em;
     }
     form{
-        margin-top:220px;
+        margin-top:200px;
     }
     input{
         height:30px;
@@ -34,19 +36,62 @@ If the given link is already a short one, it will be expanded to its origin.
         width:715px;
         border:1px solid #ccc;
     }
-    #geturl_inner{
+    #geturl_wrapper{
         overflow:hidden;
         height:1em;
+    }
+
+    #geturl_inner{
+        -webkit-transition:margin-top 0.2s ease-in-out;
+    }
+    #geturl_inner.processing{
+        margin-top:-1em;
     }
     #geturl_inner div{
         color:white;
         text-align:center;
         height:1em;
         width:100%;
+        overflow:hidden;
+    }
+    .loading{
+        background-image:url(/static/loading.gif);
     }
     #geturl,#shorturl{
         cursor:pointer;
     }
 </style>
+{% endblock %}
+{% block script %}
+$('#link').bind('keyup',function(){
+var link=$('#link').val().replace(/^(http|https|ftp):\/\//,'')
+    if(!link.match(/^((\w|d)+\.)+\w+(\/.*)?$/)) $('#geturl').text('Invalid URL')
+    else if(link.length>12) $('#geturl').text('Get Short URL')
+    else if(link.length==0) $('#geturl').text('Waiting')
+    else {
+    if($('#link').val().match(/(bit\.ly|t\.co|isnot\.tk|goo\.gl)\/(\w|\d){1,15}$/))
+        $('#geturl').text('Expand it!')
+    else  $('#geturl').text('The URL is not long enough')
+    }
+})
+$('#linkf').submit(function(){
+$.post('',{'url':$('#link').val()},
+function(data){
+var obj=eval(data);
+if(typeof(obj.longurl)!='undefined') url=obj.longurl;
+else url=obj.shorturl;
+$('#shorturl').empty().append($('<a></a>').text(url).attr('href',url)).removeClass('loading');
+});
+return false;
+})
+$('#geturl').click(function(){
+    if($(this).text()=='Get Short URL'||$(this).text()=='Expand it!'){
+    $('#shorturl').text('').addClass('loading')
+    $('#geturl_inner').addClass('processing')
+    $('#linkf').submit();
+    }
+})
+
+
 {% endblock %}
 

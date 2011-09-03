@@ -4,7 +4,7 @@ from words.shorturls.models import *
 from django.shortcuts import get_object_or_404,render_to_response
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-import re
+import re,httplib
 
 def make_shorturl(n):
     """docstring for make_shorturl"""
@@ -40,4 +40,23 @@ def new_shorturl(request):
 
 @login_required
 def shorturl_index(request):
-    return render_to_response('shorturl.html',{'short_url_root':settings.SHORT_URL_ROOT})
+    if request.POST.has_key('url'):
+        url=re.sub(r'^(http|https|ftp)://','',request.POST['url'])
+    else:
+        return render_to_response('shorturl.html',{'short_url_root':settings.SHORT_URL_ROOT})
+    g=re.match('(bit\.ly|t\.co|isnot\.tk|goo\.gl)/([\w\d_]+)',url)
+    if g:
+        (domin,sub)=g.groups()
+        if(domin.lower()=='isnot.tk'):
+            return expand_shorturl(request,sub)
+        else:
+            con=httplib.HTTPConnection(domin,timeout=5)
+            try:
+                con.request('GET',('/%s'% sub))
+            except:
+                return HttpResponseBadRequest()
+            result=con.getresponse()
+            if result.status in [301,302]:
+                location=result.getheader('location')
+                return HttpResponse("({'longurl':'%s'})" % location)
+    return HttpResponseBadRequest()
