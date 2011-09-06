@@ -22,10 +22,9 @@ def make_shorturl(url):
         shorturl.save()
     return str(shorturl)
 
-def expand_shorturl(request,url=""):
-    """docstring for index"""
+def expand_shorturl(shorturl,url):
     shorturl=get_object_or_404(ShortUrl,url=url)
-    return "({'longurl':'%s'})" %(shorturl.origin) 
+    return HttpResponseRedirect(shorturl.origin)
 
 def new_shorturl(request):
     """docstring for add"""
@@ -40,6 +39,7 @@ def new_shorturl(request):
     if len(url)<10:
         return HttpResponse("({'origin':'%s','shorturl':'%s'})" % (url,url))
     return HttpResponse("({'origin':'%s','shorturl':'http://%s'})" % (url,make_shorturl(url)))
+
 def shorturl_index(request):
     if request.POST.has_key('url'):
         url=re.sub(r'^(http|https|ftp)://','',request.POST['url'])
@@ -49,7 +49,8 @@ def shorturl_index(request):
     if g:
         (domin,sub)=g.groups()
         if(domin.lower()=='isnot.tk'):
-            return expand_shorturl(url)
+            shorturl=get_object_or_404(ShortUrl,url=sub)
+            return HttpResponse(shorturl.origin)
         else:
             con=httplib.HTTPConnection(domin,timeout=5)
             try:
