@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def index(request):
-    return render_to_response(request,'pictures/index.html')
+    return render_to_response('pictures/index.html')
 
 def picture(request,id):
     image=get_object_or_404(Picture,id=id)

@@ -23,9 +23,11 @@ class Picture(models.Model):
         models.Model.save(self)
         self.shorturl=make_shorturl("http://ant.isnot.tk/pictures/%d"% self.id)
         return models.Model.save(self)
+
     @models.permalink
     def get_absolute_url(self):
         return self.shorturl
+
     def delete(self):
         try:
             os.remove("%s/words%s" % (settings.HERE,str(self.fullsize)))

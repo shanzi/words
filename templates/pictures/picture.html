@@ -85,6 +85,10 @@ border:dashed 1px #ccc;
 #del{
 color:red;
 }
+.shorturl{
+color:blue;
+text-transform:none;
+}
 
 {% endblock %}
 
@@ -126,7 +130,9 @@ color:red;
                 <dt>size</dt>
                 <li>{{ image.width }}x{{image.height}}</li>
                 <dt>shorturl</dt>
-                <li>{{ image.shorturl }}</li>
+                <li>
+                <a class="shorturl"  href="http://{{ image.shorturl }}">{{ image.shorturl }}</a>
+                </li>
                 <dt>date</dt>
                 <li>{{ image.uploaded_at|date:"Y,M" }}</li>
                 <li id="day">{{ image.uploaded_at|date:"d" }}</li>
