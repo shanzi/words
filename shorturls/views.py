@@ -25,7 +25,7 @@ def make_shorturl(url):
 def expand_shorturl(request,url=""):
     """docstring for index"""
     shorturl=get_object_or_404(ShortUrl,url=url)
-    return HttpResponseRedirect(shorturl.origin) 
+    return "({'longurl':'%s'})" %(shorturl.origin) 
 
 def new_shorturl(request):
     """docstring for add"""
@@ -49,7 +49,7 @@ def shorturl_index(request):
     if g:
         (domin,sub)=g.groups()
         if(domin.lower()=='isnot.tk'):
-            return expand_shorturl(request,sub)
+            return expand_shorturl(url)
         else:
             con=httplib.HTTPConnection(domin,timeout=5)
             try:
