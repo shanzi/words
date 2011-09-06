@@ -11,7 +11,7 @@ Shorten your long link into a short URL with in 10 letters which starts with
 If the given link is already a short one, it will be expanded to its origin.
 </p>
 <form id="linkf" action="" method="post" accept-charset="utf-8">
-    <input type="text" name="url" id="link" placeholder="Paste your LINK here!" />
+    <input type="text" name="url" id="link" placeholder="Paste your LINK here!" autocomplete="off"/>
 </form>
 <div id="geturl_wrapper">
     <div id="geturl_inner">
@@ -55,17 +55,19 @@ If the given link is already a short one, it will be expanded to its origin.
         overflow:hidden;
     }
     .loading{
-        background-image:url(/static/loading.gif);
+        background-color:#aaa;
     }
     #geturl,#shorturl{
         cursor:pointer;
+        -webkit-transition:background-color 0.4s ease-in-out;
     }
 </style>
 {% endblock %}
 {% block script %}
 $('#link').bind('keyup',function(){
+$('#geturl_inner').removeClass('processing');
 var link=$('#link').val().replace(/^(http|https|ftp):\/\//,'')
-    if(!link.match(/^((\w|d)+\.)+\w+(\/.*)?$/)) $('#geturl').text('Invalid URL')
+    if(!link.match(/^((\w|d)+\.)+\w+(\/\S*)?$/)) $('#geturl').text('Invalid URL')
     else if(link.length>12) $('#geturl').text('Get Short URL')
     else if(link.length==0) $('#geturl').text('Waiting')
     else {
@@ -73,6 +75,12 @@ var link=$('#link').val().replace(/^(http|https|ftp):\/\//,'')
         $('#geturl').text('Expand it!')
     else  $('#geturl').text('The URL is not long enough')
     }
+})
+$.ajaxSetup({
+'error':function(){
+alert('Error!\nPlease make sure a correct URL is given!')
+$('#geturl_inner').removeClass('processing');
+}
 })
 $('#linkf').submit(function(){
 $.post('',{'url':$('#link').val()},
