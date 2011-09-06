@@ -129,10 +129,12 @@ text-transform:none;
             <ul>
                 <dt>size</dt>
                 <li>{{ image.width }}x{{image.height}}</li>
+                {% if image.shorturl %}
                 <dt>shorturl</dt>
                 <li>
                 <a class="shorturl"  href="http://{{ image.shorturl }}">{{ image.shorturl }}</a>
                 </li>
+                {% endif %}
                 <dt>date</dt>
                 <li>{{ image.uploaded_at|date:"Y,M" }}</li>
                 <li id="day">{{ image.uploaded_at|date:"d" }}</li>
