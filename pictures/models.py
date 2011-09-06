@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import re,os
 from django.conf import settings
+from words.shorturls.views import make_shorturl
+
 # Create your models here.
 class Picture(models.Model):
     user = models.ForeignKey(User, related_name='pictures')
@@ -10,7 +12,7 @@ class Picture(models.Model):
     fullsize = models.ImageField(upload_to="/media/fullsize/")
     title = models.CharField(max_length=64)
     detail = models.CharField(max_length=512, blank=True)
-    permalink = models.CharField(max_length=64, blank=True)
+    shorturl = models.CharField(max_length=64, blank=True)
     width = models.IntegerField()
     height = models.IntegerField()
     uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -18,19 +20,12 @@ class Picture(models.Model):
     def __unicode__(self):
         return self.title
     def save(self):
-        if self.permalink:
-            return models.Model.save(self)
-        p=re.sub(r'(\W|_)+','_',self.title)
-        p=re.sub(r'(^_+)|(_+$)','',p)
-        if len(p)>1:
-            self.permalink=p
         models.Model.save(self)
+        self.shorturl=make_shorturl("http://ant.isnot.tk/pictures/%d"% self.id)
+        return models.Model.save(self)
     @models.permalink
     def get_absolute_url(self):
-        if self.permalink:
-            return "/pic/%s/" % self.permalink
-        else:
-            return "/pic/%d/" % self.id
+        return self.shorturl
     def delete(self):
         try:
             os.remove("%s/words%s" % (settings.HERE,str(self.fullsize)))

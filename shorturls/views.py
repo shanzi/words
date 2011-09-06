@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import re,httplib
 
-def make_shorturl(n):
+def gen_shorturl(n):
     """docstring for make_shorturl"""
     dic="qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM_"
     shorturl=''
@@ -14,6 +14,13 @@ def make_shorturl(n):
         shorturl+=dic[n%len(dic)]
         n=int(n/len(dic))
     return shorturl
+
+def make_shorturl(url):
+    (shorturl,is_create)=ShortUrl.objects.get_or_create(origin=url)
+    if is_create:
+        shorturl.url=gen_shorturl(shorturl.id)
+        shorturl.save()
+    return str(shorturl)
 
 def expand_shorturl(request,url=""):
     """docstring for index"""
@@ -32,13 +39,7 @@ def new_shorturl(request):
         url='http://'+url
     if len(url)<10:
         return HttpResponse("({'origin':'%s','shorturl':'%s'})" % (url,url))
-    (shorturl,is_create)=ShortUrl.objects.get_or_create(origin=url)
-    if is_create:
-        shorturl.url=make_shorturl(shorturl.id)
-        shorturl.save()
-    return HttpResponse("({'origin':'%s','shorturl':'http://%s'})" % (url,str(shorturl)))
-
-@login_required
+    return HttpResponse("({'origin':'%s','shorturl':'http://%s'})" % (url,make_shorturl(url)))
 def shorturl_index(request):
     if request.POST.has_key('url'):
         url=re.sub(r'^(http|https|ftp)://','',request.POST['url'])

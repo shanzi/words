@@ -125,10 +125,13 @@ color:red;
             <ul>
                 <dt>size</dt>
                 <li>{{ image.width }}x{{image.height}}</li>
+                <dt>shorturl</dt>
+                <li>{{ image.shorturl }}</li>
                 <dt>date</dt>
                 <li>{{ image.uploaded_at|date:"Y,M" }}</li>
                 <li id="day">{{ image.uploaded_at|date:"d" }}</li>
                 <li id="time">{{ image.uploaded_at|date:"g A" }}</li>
+                
             </ul>
         </td>
     </tr>
