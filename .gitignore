@@ -5,4 +5,5 @@ media/*
 fixtures/*
 words
 static/js/mobile.mobile/*
+*.orig
 
