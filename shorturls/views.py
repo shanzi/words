@@ -28,7 +28,7 @@ def new_shorturl(request):
         url=request.GET['url']
     else:
         return HttpResponseBadRequest()
-    if not re.match(r'^(\w|\d)+://',url):
+    if not re.match(r'^[\w\d]+://',url):
         url='http://'+url
     if len(url)<10:
         return HttpResponse("({'origin':'%s','shorturl':'%s'})" % (url,url))
@@ -36,7 +36,7 @@ def new_shorturl(request):
     if is_create:
         shorturl.url=make_shorturl(shorturl.id)
         shorturl.save()
-    return HttpResponse("({'origin':'%s','shorturl':'%s'})" % (url,str(shorturl)))
+    return HttpResponse("({'origin':'%s','shorturl':'http://%s'})" % (url,str(shorturl)))
 
 @login_required
 def shorturl_index(request):
@@ -59,4 +59,8 @@ def shorturl_index(request):
             if result.status in [301,302]:
                 location=result.getheader('location')
                 return HttpResponse("({'longurl':'%s'})" % location)
+    else:
+        if re.match(r'^([\w\d\-]+\.)+(\w+)(\/\S*)?$',url):
+            return new_shorturl(request)
+
     return HttpResponseBadRequest()
