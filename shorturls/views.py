@@ -50,7 +50,7 @@ def shorturl_index(request):
         (domin,sub)=g.groups()
         if(domin.lower()=='isnot.tk'):
             shorturl=get_object_or_404(ShortUrl,url=sub)
-            return HttpResponse(shorturl.origin)
+            return HttpResponse("({'longurl':'%s'})"% shorturl.origin)
         else:
             con=httplib.HTTPConnection(domin,timeout=5)
             try:
