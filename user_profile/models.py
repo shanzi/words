@@ -11,6 +11,7 @@ class UserProfile(models.Model):
     profile = models.CharField(max_length=256, blank=True)
     gravatar_img= models.CharField(max_length=200, blank=True)
     homepage = models.URLField(verify_exists=False, max_length=200, blank=True)
+    twitter_token = models.CharField(max_length=128, blank=True)
 
     def __unicode__(self):
         return self.title
