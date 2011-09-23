@@ -124,7 +124,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'words.pictures',
     'south',
-    'words.socialauth',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'words.keywords',
@@ -132,6 +131,7 @@ INSTALLED_APPS = (
     'words.links',
     'words.todos',
     'words.shorturls',
+    'words.twitter',
 )
 
 
@@ -167,7 +167,3 @@ TWITTER_CONSUMER_KEY='dhnExGaoiIx5r1OXHHa8tg'
 TWITTER_CONSUMER_SECRET='7fVMn5GFBrq4tH82wANDnkaWSJ73lWX9nXKBbUUvbM'
 
 
-AUTHENTICATION_BACKEND = (
-    'django.contrib.auth.backends.ModelBackend',
-    'socialauth.auth_backends.TwitterBackend',
-    )
