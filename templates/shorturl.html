@@ -71,7 +71,7 @@ var link=$('#link').val().replace(/^(http|https|ftp):\/\//,'')
     else if(link.length>12) $('#geturl').text('Get Short URL')
     else if(link.length==0) $('#geturl').text('Waiting')
     else {
-    if($('#link').val().match(/(bit\.ly|t\.co|isnot\.tk|goo\.gl)\/(\w|\d){1,15}$/))
+    if($('#link').val().match(/(is\.gd|bit\.ly|t\.co|isnot\.tk|goo\.gl)\/(\w|\d){1,15}$/))
         $('#geturl').text('Expand it!')
     else  $('#geturl').text('The URL is not long enough')
     }

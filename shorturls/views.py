@@ -45,7 +45,7 @@ def shorturl_index(request):
         url=re.sub(r'^(http|https|ftp)://','',request.POST['url'])
     else:
         return render_to_response('shorturl.html',{'short_url_root':settings.SHORT_URL_ROOT})
-    g=re.match('(bit\.ly|t\.co|isnot\.tk|goo\.gl)/([\w\d_]+)',url)
+    g=re.match('(is\.gd|bit\.ly|t\.co|isnot\.tk|goo\.gl)/([\w\d_]+)',url)
     if g:
         (domin,sub)=g.groups()
         if(domin.lower()=='isnot.tk'):
