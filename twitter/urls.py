@@ -22,4 +22,5 @@ urlpatterns = patterns('words.twitter.views',
     url(r'^clear/$',
         view=unauth,
         name='twitter_oauth_unauth'),
+    url(r'^update/$',update),
 )

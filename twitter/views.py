@@ -17,11 +17,10 @@ from django.core.urlresolvers import reverse
 
 from words.twitter.utils import *
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
 
 
-CONSUMER = oauth.OAuthConsumer(settings.TWITTER_CONSUMER_KEY, settings.TWITTER_CONSUMER_SECRET)
-CONNECTION = httplib.HTTPSConnection(settings.TWITTER_SERVER)
+CONSUMER = oauth.OAuthConsumer(CONSUMER_KEY,CONSUMER_SECRET)
+CONNECTION = httplib.HTTPSConnection(SERVER)
 
 @login_required
 def main(request):
@@ -56,9 +55,19 @@ def return_(request):
     verifier = request.GET.get('oauth_verifier')
     access_token = exchange_request_token_for_access_token(CONSUMER, token, params={'oauth_verifier':verifier})
     #request.session['access_token'] = access_token.to_string()
-    request.user.twitter_token=access_token.to_string()
-    request.user.save()
+    request.user.profile.twitter_token=access_token.to_string()
+    request.user.profile.save()
     return render_to_response('twitter/success.html')
+
+@login_required
+def update(request):
+    """docstring for update"""
+    if request.POST and request.user.profile.twitter_token:
+        token=oauth.OAuthToken.from_string(request.user.profile.twitter_token)
+        if request.POST.has_key('status') and len(request.POST['status'])>0 and len(request.POST['status'])<140:
+            update_status(CONSUMER,CONNECTION,token,request.POST['status'].encode('utf-8'))
+    return render_to_response('twitter/update.html')
+
 
 #def friend_list(request):
 #    users = []
