@@ -17,16 +17,18 @@ from django.core.urlresolvers import reverse
 
 from words.twitter.utils import *
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
-CONSUMER = oauth.OAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET)
-CONNECTION = httplib.HTTPSConnection(SERVER)
+
+CONSUMER = oauth.OAuthConsumer(settings.TWITTER_CONSUMER_KEY, settings.TWITTER_CONSUMER_SECRET)
+CONNECTION = httplib.HTTPSConnection(settings.TWITTER_SERVER)
 
 @login_required
 def main(request):
     if request.session.has_key('access_token'):
         return HttpResponseRedirect(reverse('twitter_oauth_friend_list'))
     else:
-        return render_to_response('words.twitter/base.html')
+        return render_to_response('twitter/base.html')
 @login_required
 def unauth(request):
     response = HttpResponseRedirect(reverse('twitter_oauth_main'))
@@ -53,9 +55,10 @@ def return_(request):
         return HttpResponse("Something went wrong! Tokens do not match")
     verifier = request.GET.get('oauth_verifier')
     access_token = exchange_request_token_for_access_token(CONSUMER, token, params={'oauth_verifier':verifier})
-    response = HttpResponseRedirect(reverse('twitter_oauth_friend_list'))
-    request.session['access_token'] = access_token.to_string()
-    return response
+    #request.session['access_token'] = access_token.to_string()
+    request.user.twitter_token=access_token.to_string()
+    request.user.save()
+    return render_to_response('twitter/success.html')
 
 #def friend_list(request):
 #    users = []
