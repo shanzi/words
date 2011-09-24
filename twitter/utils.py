@@ -36,6 +36,7 @@ def fetch_response(oauth_request, connection):
     connection.request(oauth_request.http_method, url)
     response = connection.getresponse()
     s = response.read()
+    connection.close()
     return s
 
 def get_unauthorised_request_token(consumer, connection, signature_method=signature_method):
