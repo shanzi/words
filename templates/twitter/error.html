@@ -1,0 +1,12 @@
+{% extends "twitter/base.html" %}
+{% block content %}
+<h2>An error accurs when update a status</h2>
+<br>
+<p>
+{% if error %}
+<b>Detail<b>: {{ error }}
+{% else %}
+No Detail is availible.
+{% endif %}
+</p>
+{% endblock %}

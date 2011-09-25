@@ -1,0 +1,52 @@
+{% extends "twitter/base.html" %}
+{% block title %}
+Tweet Success!
+{% endblock %}
+{% block content %}
+<h2>Twitter status has been successfully post!</h2>
+<div id="snap">
+<table width="100%">
+<tr>
+    <td align="center" width="60"><img src="{{ response.user.profile_image_url }}" alt="{{ response.user.name }}" /></td>
+    <td align="left" valign="top">{{ status }}</td>
+</tr>
+<tr>
+    <td align="center">{{ response.user.name }}</td>
+    <td id="time">{{ response.created_at}}</td>
+</tr>
+</table>
+</div>
+<br>
+<a href="/twitter/update/">&lt;&lt;Back</a>
+{% endblock %}
+{% block extend_head %}
+<style type="text/css">
+    #snap{
+        border:solid 1px #ccc;
+        padding:10px;
+        margin:1em 0;
+        -webkit-border-radius:10px;
+        -moz-border-radius:10px;
+        -o-border-radius:10px;
+        border-radius:10px;
+        -webkit-box-shadow: 0 0 4px #999;
+        -moz-box-shadow: 0 0 4px #999;
+        -o-box-shadow: 0 0 4px #999;
+        box-shadow: 0 0 4px #999;
+
+    }
+    #time{
+        color:#ccc;
+        text-align:right
+    }
+    a{background:#0b73de;color:white;padding:0.1em,font-size:2em;
+        -webkit-border-radius:0.2em;
+        -moz-border-radius:0.2em;
+        -o-border-radius:0.2em;
+        border-radius:0.2em;
+    
+    }
+    
+
+</style>
+{% endblock %}
