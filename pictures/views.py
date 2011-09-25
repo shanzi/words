@@ -3,6 +3,7 @@ from django.http import HttpResponse,HttpResponseForbidden,HttpResponseRedirect
 from words.pictures.models import Picture
 from words.pictures.forms import PictureUpload
 from django.contrib.auth.decorators import login_required
+from words.twitter.views import update as twitter_update
 
 @login_required
 def index(request):
@@ -54,4 +55,13 @@ def delete(request,id=""):
         request.session['operation_target']=pic.id
         request.session['operation_snap']="<img src='%s' />" % pic.medium
         return HttpResponseRedirect('/confirm/') 
+
+@login_required
+def tweet(request,id):
+    pic=get_object_or_404(Picture,id=id)
+    if pic.user.id != request.user.id:
+        return HttpResponseForbidden()
+    else:
+        status="[Photo:%s] %s (http://%s)" % (pic.title,pic.detail,pic.shorturl)
+        return twitter_update(request,"Tweet a photo!",status)
 
