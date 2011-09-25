@@ -17,6 +17,7 @@ urlpatterns = patterns('',
         # url(r'^$', 'words.views.home', name='home'),
         url(r'^pictures/', include('words.pictures.urls')),
         url(r'^todos/',include('words.todos.urls')),
+        url(r'^confirm/?',confirm),
 
         # Uncomment the admin/doc line below to enable admin documentation:
         # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -24,7 +25,7 @@ urlpatterns = patterns('',
         # Uncomment the next line to enable the admin:
         url(r'^$',index),
         url(r'^sns/',include('words.socialauth.urls')),
-        url(r'^admin/', include(admin.site.urls)),
+        url(r'^admin', include(admin.site.urls)),
         url(r'^keywords/',include('words.keywords.urls')),
         url(r'^twitter/',include('words.twitter.urls')),
         url(r'^shorturl/$',shorturl_index),

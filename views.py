@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden,HttpResponseServerError
 from django.contrib.auth.models import User
 from keywords.models import Keyword
 from django.contrib.auth.decorators import login_required
@@ -20,14 +20,23 @@ def index(request):
 def confirm(request):
     """docstring for confirm"""
     ss=request.session
-    if ss.has_key('operation_title') and ss.has_key('operation_detail') and ss.has_key('operation_target') and ss.has_key('operation_callback'):
-        res=render_to_response('confirm.html',{'title':ss['operation_title'],'detail':ss['operation_detail'],'callback':ss['operation_callback'],'target':ss['operation_target']})
+    if ss.has_key('operation_snap'):
+        snap=ss['operation_snap']
     else:
-        res=HttpResponseForbidden()
-    for key in ['operation_title','operation_detail','operation_target','operation_callback']:
-        try:
-            del ss[key]
-        except:
-            continue
+        snap=None
+    try:
+        if ss.has_key('operation_title') and ss.has_key('operation_detail') and ss.has_key('operation_target') and ss.has_key('operation_callback'):
+            res=render_to_response('confirm.html',{'title':ss['operation_title'],'detail':ss['operation_detail'],'callback':ss['operation_callback'],'target':ss['operation_target'],'snap':snap})
+        else:
+            res=HttpResponseForbidden()
+    except Exception,e:
+        raise e
+        return HttpResponseServerError()
+    else:
+        for key in ['operation_title','operation_detail','operation_target','operation_callback','operation_snap']:
+            try:
+                del ss[key]
+            except:
+                continue
     return res
 

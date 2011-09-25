@@ -4,10 +4,49 @@
 {% endblock %}
 {% block content %}
 <h2>
-    {{ detail }}
+    {{ title }}
 </h2>
-<form action="{{ callback }}" mothed="post">
-    <input type="hidden" value="{{ target }}"/>
-    <input type="submit" />
+<p>
+{{ detail }}
+</p>
+{% if snap %}
+<div id="snap">
+    {{ snap|safe }}
+</div>
+{% endif %}
+<form action="{{ callback }}" method="post">
+    <input name="confirm_target" type="hidden" value="{{ target }}"/>
+    <input id="cancel" type="reset" value="Cancel" onclick="history.back(1)"/>
+    <input id="confirm" type="submit" value="Confirm"/>
 </form>
+{% endblock %}
+{% block extern_style %}
+<style type="text/css">
+    #snap{
+        border:1px #ccc solid;
+        padding:10px;
+        text-align:center
+    }
+    form{text-align:right}
+    #confirm,#cancel{
+        height:40px;
+        border:none;
+        color:#fff;
+        background:#f66;
+        font-size:2.5em;
+        padding:0;
+        overflow:hidden;
+        cursor:pointer;
+    }
+    #cancel{
+        background:#6f6;
+        margin-right:5px;
+    }
+    
+</style>
+{% endblock %}
+{% block google_analytic %}
+{% endblock %}
+{% block jquery %}
+
 {% endblock %}

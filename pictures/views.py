@@ -40,17 +40,18 @@ def upload(request):
 def delete(request,id=""):
     if request.POST and request.POST.has_key('confirm_target'):
         pic=get_object_or_404(Picture,id=int(request.POST['confirm_target']))
-        if pic.id!= request.user.id:
+        if pic.user.id!= request.user.id:
             return HttpResponseForbidden();
         else:
-            detail='The picture \"$s\" has already been sucessfully deleted!' % pic.title
+            detail='The picture \"%s\" has been sucessfully deleted!' % pic.title
             pic.delete()
             return render_to_response('success.html',{'title':'Delete Picture Success','detail':detail})
     else:
-        pic=get_object_or_404(Picture,id=ind(id))
+        pic=get_object_or_404(Picture,id=int(id))
         request.session['operation_title']='DELETE %s' % pic.title        
         request.session['operation_detail']='Are your sure to DELETE picture "%s"?' % pic.title
         request.session['operation_callback']="/pictures/delete/"
         request.session['operation_target']=pic.id
+        request.session['operation_snap']="<img src='%s' />" % pic.medium
         return HttpResponseRedirect('/confirm/') 
 

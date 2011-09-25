@@ -39,11 +39,6 @@
                 border-top:dashed 2px #ccc;
             }
             a{
-                -webkit-border-radius:0.5em;
-                -moz-border-radius:0.5em;
-                -ms-border-radius:0.5em;
-                -o-border-radius:0.5em;
-                border-radius:0.5em;
                 color:white;
                 text-decoration:none;
                 cursor:pointer;
@@ -141,7 +136,9 @@
             </div>
         </div>
 
+        {% block jquery %}
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        {% endblock %}
         <script type="text/javascript">
             $('html').ajaxSend(function(event, xhr, settings) {
                     function getCookie(name) {
