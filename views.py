@@ -1,8 +1,8 @@
 from django.shortcuts import render_to_response
+from django.http import HttpResponseForbidden
 from django.contrib.auth.models import User
 from keywords.models import Keyword
-
-
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     """docstring for index"""
@@ -15,4 +15,19 @@ def index(request):
     gravatar_img=user.profile.gravatar_img
     other_keywords=Keyword.objects.filter(section=None).all()
     return render_to_response('index.html',locals())
+
+@login_required
+def confirm(request):
+    """docstring for confirm"""
+    ss=request.session
+    if ss.has_key('operation_title') and ss.has_key('operation_detail') and ss.has_key('operation_target') and ss.has_key('operation_callback'):
+        res=render_to_response('confirm.html',{'title':ss['operation_title'],'detail':ss['operation_detail'],'callback':ss['operation_callback'],'target':ss['operation_target']})
+    else:
+        res=HttpResponseForbidden()
+    for key in ['operation_title','operation_detail','operation_target','operation_callback']:
+        try:
+            del ss[key]
+        except:
+            continue
+    return res
 
