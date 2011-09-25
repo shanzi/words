@@ -162,11 +162,11 @@
                     }
                     });
 {% block script %}
-function callbackhandle(status,imageid,imageurl,title,shorturl){
+function callbackhandle(status,imageid,imageurl,title){
     if(status==0){
         var ec=$('<td></td>').addClass('edit').addClass($('#upload').attr('class')).append('<a>Edit</a>')
-            $('<tr></tr>').append("<td width='120'><a href='http://"+shorturl+"' ><img src='"+imageurl+"' /></a></td>")
-            .append("<td><h2>"+title+"</h2><p>Say something about this picture here</p></td>")
+            $('<tr></tr>').append("<td width='120' ><a href='/pictures/"+imageid+"' ><img src='"+imageurl+"' /></a></td>")
+            .append("<td><h2>"+title+"</h2><p>Say something about this picture here</p><a class='blue' href='/pictures/tweet/"+imageid+"'>Tweet it!</a></td>")
             .append(ec)
             .appendTo('#rainbow');
     }
