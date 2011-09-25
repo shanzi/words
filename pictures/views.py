@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response,get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseForbidden,HttpResponseRedirect
 from words.pictures.models import Picture
 from words.pictures.forms import PictureUpload
 from django.contrib.auth.decorators import login_required
@@ -35,4 +35,22 @@ def upload(request):
         form=PictureUpload(request.POST,request.FILES,request.user)
         img=form.save()
     return render_to_response('pictures/upload.html',{'image':img})
+
+@login_required
+def delete(request,id=""):
+    if request.POST and request.POST.has_key('confirm_target'):
+        pic=get_object_or_404(Picture,id=int(request.POST['confirm_target']))
+        if pic.id!= request.user.id:
+            return HttpResponseForbidden();
+        else:
+            detail='The picture \"$s\" has already been sucessfully deleted!' % pic.title
+            pic.delete()
+            return render_to_response('success.html',{'title':'Delete Picture Success','detail':detail})
+    else:
+        pic=get_object_or_404(Picture,id=ind(id))
+        request.session['operation_title']='DELETE %s' % pic.title        
+        request.session['operation_detail']='Are your sure to DELETE picture "%s"?' % pic.title
+        request.session['operation_callback']="/pictures/delete/"
+        request.session['operation_target']=pic.id
+        return HttpResponseRedirect('/confirm/') 
 
