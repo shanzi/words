@@ -101,7 +101,7 @@
                 {% block content %}
                 <div class="hidden">
                     <iframe name="response"></iframe>
-                    <form enctype="multipart/form-data" method="post" id='uploadform' target="response" action="/pictures/upload">
+                    <form enctype="multipart/form-data" method="post" id='uploadform' target="response" action="/pictures/upload/">
                         <input type="file" name="image" id="id_image" />
                     </form>
                 </div>
@@ -166,7 +166,7 @@ function callbackhandle(status,imageid,imageurl,title){
     if(status==0){
         var ec=$('<td></td>').addClass('edit').addClass($('#upload').attr('class')).append('<a>Edit</a>')
             $('<tr></tr>').append("<td width='120' ><a href='/pictures/"+imageid+"' ><img src='"+imageurl+"' /></a></td>")
-            .append("<td><h2>"+title+"</h2><p>Say something about this picture here</p><a class='blue' href='/pictures/tweet/"+imageid+"'>Tweet it!</a></td>")
+            .append("<td><h2>"+title+"</h2><p>Say something about this picture here</p><a class='blue tweet' href='/pictures/tweet/"+imageid+"'>Tweet it!</a></td>")
             .append(ec)
             .appendTo('#rainbow');
     }
@@ -216,6 +216,11 @@ $('.edit a').live('click',function(){
                   )
         }
 })
+$('.tweet').live('click',function(){
+            var ts=$(this)
+            window.open(ts.attr('href'),"Tweet it!",'height=800, width=800, toolbar=no, menubar=no,location=no, status=no')
+            return false
+        })
 $('#upload').click(function(){
         if(!$('#imgwp').hasClass('uploading')){
         $('#id_image').bind('change',
