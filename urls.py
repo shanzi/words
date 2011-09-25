@@ -24,8 +24,7 @@ urlpatterns = patterns('',
 
         # Uncomment the next line to enable the admin:
         url(r'^$',index),
-        url(r'^sns/',include('words.socialauth.urls')),
-        url(r'^admin', include(admin.site.urls)),
+        url(r'^admin/', include(admin.site.urls)),
         url(r'^keywords/',include('words.keywords.urls')),
         url(r'^twitter/',include('words.twitter.urls')),
         url(r'^shorturl/$',shorturl_index),
