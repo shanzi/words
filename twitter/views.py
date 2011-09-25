@@ -60,13 +60,26 @@ def return_(request):
     return render_to_response('twitter/success.html')
 
 @login_required
-def update(request):
+def update(request,title="Tweet",status=""):
     """docstring for update"""
     if request.POST and request.user.profile.twitter_token:
         token=oauth.OAuthToken.from_string(request.user.profile.twitter_token)
         if request.POST.has_key('status') and len(request.POST['status'])>0 and len(request.POST['status'])<140:
-            update_status(CONSUMER,CONNECTION,token,request.POST['status'].encode('utf-8'))
-    return render_to_response('twitter/update.html')
+            json=update_status(CONSUMER,CONNECTION,token,request.POST['status'].encode('utf-8'))
+            try:
+                dic=simplejson.loads(json)
+                if dic.has_key('error'):
+                    return render_to_response('twitter/error.html',{'error':dic['error']})
+            except:
+                return render_to_response('twitter/error.html')
+            return render_to_response('twitter/success.html',{'response':dic})
+    print "requset.get"
+    if request.GET.has_key('title'):
+        title=request.GET['title']
+    if request.GET.has_key('status'):
+        status=request.GET['status']
+    return render_to_response('twitter/update.html',{'title':title,'status':status})
+
 
 
 #def friend_list(request):

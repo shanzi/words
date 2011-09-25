@@ -1,8 +1,103 @@
-{% extends "pictures/index.html" %}
+{% extends "twitter/base.html" %}
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block extend_head %}
+<style type="text/css">
+    textarea{
+        width:100%;
+        display:block;
+        border:solid 2px #ccc;
+        background:transparent;
+        font-size:2em;
+        -webkit-transition:border-color 0.4s ease-out;
+        -moz-transition:border-color 0.4s ease-out;
+        -o-transition:border-color 0.4s ease-out;
+        transition:border-color 0.4s ease-out;
+        color:#666;
+
+    }
+    textarea:hover
+    {
+        outline:none;
+        border:solid 2px #999
+    }
+    textarea:focus
+    {
+        outline:none;
+        border:solid 2px #333
+    }
+    input{
+        border:none;
+        height:40px;
+        width:250px;
+        cursor:pointer;
+        background:#666;
+        color:#fff;
+        text-align:right;
+        font-size:2.5em;
+        margin-left:5px;
+        margin-top:1em;
+        -webkit-transition:background-color 0.4s ease-out;
+
+    }
+    #reset{ 
+        background:#999;
+        width:100px;
+    } 
+    #reset:hover
+    {
+        background:#f66;
+    }
+    #submit:hover
+    {
+        background:#6f6;
+    }
+    #count{
+        font-size:120px;
+        position:absolute;
+        right:30px;
+        color:#ccc;
+        z-index:-100;
+    }
+    #count.outofrange
+    {
+        color:#f66;
+    }
+</style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript">
+    var limit=140;
+    $(document).ready(function(){
+            var count=function(){
+            var c=$('#status').val().length||0;
+            var ct=$('#count');
+            ct.text(limit-c);
+            if(c>limit) ct.addClass('outofrange');
+            else ct.removeClass();
+            return c;
+            }
+            $('#status').bind('keyup',count);
+            count()
+            $('form').submit(function(){
+            
+                if(($('#status').val().length||0)>limit){ alert('Your tweet must be shorter than '+limit+' letters!' );return false;} 
+                })
+            })
+</script>
+{% endblock %}
 {% block content %}
 <form action="" method="post">
-<textarea id="" name="status" rows="10" cols="30"></textarea>
-<input type="submit" />
-<input type="reset" />
+    <h2>
+        Update a twitter status:
+    </h2>
+    <div>
+        <div id="count">140</div>
+        <textarea id="status" name="status" rows="5" cols="30">{{ status }}</textarea>
+    </div>
+    <div class="right">
+        <input type="reset" id="reset" value="Reset"/>
+        <input type="submit" value="Tweet Now!" id="submit" />
+    </div>
 </form>
 {% endblock %}

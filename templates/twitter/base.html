@@ -3,27 +3,26 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>Twitter Example</title>
+		<title>Twitter</title>
 		<style>
-		* {
-			margin: 0;
-			padding: 0;
-		}
-		body {
-			font-size: 80%;
-		}
 		#wrap {
-			width: 700px;
-			margin: 0em auto;
 			line-height: 1.6;
 			font-family: Helvetica, Arial, sans-serif;
+            border-bottom:20px solid #000;
+            position:fixed;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            overflow:scroll;
+            padding:0;
 		}
 		#header {
 			background: #111;
 			color: white;
 		}
 		#header, #content {
-			padding: 10px;
+			padding: 20px;
 		}
 		h1 {
 			font-family: Georgia;
@@ -33,18 +32,7 @@
 			padding-top: 50px;
 		}
 		
-		.auth {
-			font-size: 30px;
-			color: white;
-			background: #222;
-			padding: 25px;
-			-moz-border-radius: 10px;
-			-webkit-border-radius: 10px;
-			border-radius: 10px;
-		}
-		.auth:hover {
-			background: #000;
-		}
+		
 		
 		.odd {
 			background: #f3f3f3;
@@ -77,38 +65,54 @@
 			width: 100px;
 			text-align: center;
 		}
-		.twitter_user {
-			padding: 20px;
-			border-bottom: 1px solid #f1f1f1;
-		}
 		.clearer {
 			clear: both;
 		}
+        .right{
+            text-align:right;
+        }
 		
 		h2 {
-			font-size: 34px;
-			margin-top: 20px;
-			color: #0b73de;
-			margin-bottom: 5px;
+			color: #222;
+            margin:0.2em 0;
 		}
-		p {
-			margin-bottom: 1.5em;
-		}
+        *{
+            padding:0;
+            margin:0;
+        }
 		</style>
+        {% block extend_head %}
+        <style type="text/css" media="screen">
+            .auth {
+			color: white;
+            font-size:2em;
+			background: #0b73de;
+			-moz-border-radius: 10px;
+			-webkit-border-radius: 10px;
+			border-radius: 10px;
+            padding:0.2em;
+		}
+        </style>
+        
+        {% endblock %}
 	</head>
 	
 	<body>
 		<div id="wrap">
 			<div id="header">
-			<h1>Twitter oAuth example</h1>
+                <h1>
+                {% block title  %}
+                    Connect To Twitter
+                {% endblock %}
+                </h1>
 			</div>
 			<div id="content">
 			{% block content %}
-				<h2>Welcome!</h2>
-				<p>This sample application is here to show you how you can authenticate against Twitter using their 
-					new oAuth API.<br>Press the big button below to authenticate.</p>
-					
-				<p><a class="auth" href="auth/">Authenticate »</a></p>
+                <h2>
+                Press the big button below to authenticate.
+                </h2>
+                <br/><br/><br/>
+				<a class="auth" href="auth/">Authenticate »</a>
 			{% endblock %}
 			</div>
 			
