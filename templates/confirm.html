@@ -1,0 +1,13 @@
+{% extends "pictures/index.html" %}
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block content %}
+<h2>
+    {{ detail }}
+</h2>
+<form action="{{ callback }}" mothed="post">
+    <input type="hidden" value="{{ target }}"/>
+    <input type="submit" />
+</form>
+{% endblock %}
