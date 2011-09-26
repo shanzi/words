@@ -82,6 +82,7 @@
             $('form').submit(function(){
             
                 if(($('#status').val().length||0)>limit){ alert('Your tweet must be shorter than '+limit+' letters!' );return false;} 
+                else if (($('#status').val().length||0)==0) { alert('Hey dude! Say something!');return false;}
                 })
             })
 </script>
