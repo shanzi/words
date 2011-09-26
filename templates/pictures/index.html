@@ -223,6 +223,7 @@ $('.tweet').live('click',function(){
         })
 $('#upload').click(function(){
         if(!$('#imgwp').hasClass('uploading')){
+        $('#id_image').parent()[0].reset();
         $('#id_image').bind('change',
             function(){
             $('#imgwp').addClass('uploading');
