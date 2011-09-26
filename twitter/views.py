@@ -56,7 +56,7 @@ def return_(request):
     #request.session['access_token'] = access_token.to_string()
     request.user.profile.twitter_token=access_token.to_string()
     request.user.profile.save()
-    return render_to_response('twitter/success.html')
+    return HttpResponseRedirect('/twitter/update/')
 
 @login_required
 def update(request,title="Tweet it!",status=""):
