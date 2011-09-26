@@ -1,6 +1,7 @@
 #WORDS
 ##INTRODUCTION
 This application is based on _django_, it provide the following features:
+
 1. upload and display a picture, and update a twitter status for a picture uploaded.
 2. shorten long url and expand short url from bit.ly, t.co, is.gd and goo.gl.
 3. An ajax-supported picture uploading plugin for JQuery.
