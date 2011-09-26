@@ -62,6 +62,6 @@ def tweet(request,id):
     if pic.user.id != request.user.id:
         return HttpResponseForbidden()
     else:
-        status="[Photo:%s] %s (http://%s)" % (pic.title,pic.detail,pic.shorturl)
+        status="(Photo:http://%s) %s" % (pic.shorturl,pic.title,pic.detail)
         return twitter_update(request,"Tweet a photo!",status)
 
