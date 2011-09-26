@@ -104,6 +104,7 @@ text-transform:none;
             <h1>{{ image }}</h1>
             {% if image.detail %}
             <p>{{ image.detail }}</p>
+            <a href="/pictures/tweet/{{ image.id }}" class="blue tweet">Tweet it!</a>
             {% else %}
             <p><a href="{{ homepage }}">{{ image.user }}</a> said nothing.</p>
             {% endif %}
