@@ -42,11 +42,9 @@ def auth(request):
     response = HttpResponseRedirect(auth_url)
     request.session['unauthed_token'] = token.to_string()   
     return response
-
+@login_required
 def return_(request):
     "/return/"
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/accounts/login/')
     unauthed_token = request.session.get('unauthed_token', None)
     if not unauthed_token:
         return HttpResponse("No un-authed token cookie")
