@@ -62,6 +62,8 @@ def tweet(request,id):
     if pic.user.id != request.user.id:
         return HttpResponseForbidden()
     else:
+        if not pic.shorturl:
+            return render_to_response('twitter/error.html',{'error':'This picture is too old that do not have an shorturl,So you can\'t tweet it!'})
         status="(Photo:http://%s) %s" % (pic.shorturl,pic.title,pic.detail)
         return twitter_update(request,"Tweet a photo!",status)
 
