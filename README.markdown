@@ -24,5 +24,8 @@ More features may be added in the future in the following:
 ##LICENCING
 This is an open source project under [__GPLv3__](http://www.gnu.org/copyleft/gpl.html) licence  (_DO NOT_ include those source code from other projects)
 
-##CONTACK
+##CONTACT
+1. Website: [ANT isNot Tank](http://ant.isnot.tk/) 
+2. EMAIL: [yun.er.run@gmail.com](mailto:yun.er.run@gmail.com) 
+3. Twitter id: @ant\_sz
 
