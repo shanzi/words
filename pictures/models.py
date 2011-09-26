@@ -36,12 +36,3 @@ class Picture(models.Model):
         except:
             pass
         return models.Model.delete(self)
-
-class Comment(models.Model):
-    """docstring"""
-    email = models.EmailField(max_length=75)
-    nickname = models.CharField(max_length=75)
-    content = models.CharField(max_length=200)
-    picture = models.ForeignKey(Picture, related_name='comments')
-    def __unicode__(self):
-       return self.content
