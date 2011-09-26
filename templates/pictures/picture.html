@@ -94,6 +94,7 @@ text-transform:none;
 background:#399dfa;
 color:#fff;
 text-transform:none;
+text-decoration:none;
 }
 {% endblock %}
 
@@ -109,10 +110,10 @@ text-transform:none;
             <h1>{{ image }}</h1>
             {% if image.detail %}
             <p>{{ image.detail }}</p>
-            <a href="/pictures/tweet/{{ image.id }}" class="tweet">Tweet it!</a>
             {% else %}
             <p><a href="{{ homepage }}">{{ image.user }}</a> said nothing.</p>
             {% endif %}
+            <a href="/pictures/tweet/{{ image.id }}" class="tweet">Tweet it!</a>
         </td>
         <td valign="top">
             By: <a href="{{ homepage }}">{{ image.user }}</a>
