@@ -216,4 +216,10 @@ $('#rainbow h1,#rainbow p').click(function(){
 var ref=$('.edit a')
 if(ref.text()=='Edit') ref.click();
 })
+$('.tweet').live('click',function(){
+            var ts=$(this)
+            window.open(ts.attr('href'),"Tweet it!",'height=800, width=800, toolbar=no, menubar=no,location=no, status=no')
+            return false
+        })
+
 {% endblock %}
