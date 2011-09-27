@@ -33,8 +33,8 @@ def request_oauth_resource(consumer, url, access_token, parameters=None, signatu
 
 def fetch_response(oauth_request, connection):
     url = oauth_request.to_url()
-    print url
-    connection.set_debuglevel(1)
+    #print url
+    #connection.set_debuglevel(1)
     connection.close()
     connection.connect()
     connection.request(oauth_request.http_method, url)
