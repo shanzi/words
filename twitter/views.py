@@ -67,7 +67,9 @@ def update(request,title="Tweet it!",status=""):
     if request.POST:
         token=oauth.OAuthToken.from_string(request.user.profile.twitter_token)
         if request.POST.has_key('status') and len(request.POST['status'])>0 and len(request.POST['status'])<140:
-            json=update_status(CONSUMER,CONNECTION,token,request.POST['status'].encode('utf-8'))
+            tc=httplib.HTTPSConnection(SERVER)
+            json=update_status(CONSUMER,tc,token,request.POST['status'].encode('utf-8'))
+            tc.close()
             try:
                 dic=simplejson.loads(json)
                 if dic.has_key('error'):

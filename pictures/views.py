@@ -34,7 +34,6 @@ def upload(request):
     img=None;
     if request.POST:
         form=PictureUpload(request.POST,request.FILES,request.user)
-        print request.FILES
         img=form.save()
     return render_to_response('pictures/upload.html',{'image':img})
 
