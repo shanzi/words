@@ -61,23 +61,21 @@ def return_(request):
 @login_required
 def update(request,title="Tweet it!",status=""):
     """docstring for update"""
-    print request.user
     if not request.user.profile.twitter_token:
         return HttpResponseRedirect('/twitter/')
     if request.POST:
         token=oauth.OAuthToken.from_string(request.user.profile.twitter_token)
         if request.POST.has_key('status') and len(request.POST['status'])>0 and len(request.POST['status'])<140:
-            tc=httplib.HTTPSConnection(SERVER)
-            json=update_status(CONSUMER,tc,token,request.POST['status'].encode('utf-8'))
-            tc.close()
+            json=update_status(CONSUMER,CONNECTION,token,request.POST['status'].encode('utf-8'))
+            if len(json)==0:
+                return render_to_response('twitter/error.html',{'error': 'Twitter respond nothing!'})
             try:
                 dic=simplejson.loads(json)
                 if dic.has_key('error'):
                     return render_to_response('twitter/error.html',{'error':dic['error']})
-            except:
+            except Exception,e:
                 return render_to_response('twitter/error.html')
             return render_to_response('twitter/success.html',{'response':dic,'status':request.POST['status']})
-    print "requset.get"
     if request.GET.has_key('title'):
         title=request.GET['title']
     if request.GET.has_key('status'):
