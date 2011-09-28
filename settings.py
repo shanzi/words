@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     'words.todos',
     'words.shorturls',
     'words.twitter',
+    'words.clog',
 )
 
 
@@ -167,3 +168,5 @@ SHORT_URL_ROOT='isnot.tk'
 TWITTER_CONSUMER_KEY='dhnExGaoiIx5r1OXHHa8tg'
 TWITTER_CONSUMER_SECRET='7fVMn5GFBrq4tH82wANDnkaWSJ73lWX9nXKBbUUvbM'
 
+#CLOG
+CLOG_TITLE='ANT is Not Tank'
