@@ -27,6 +27,21 @@
     </tr>
 </table>
 {% endblock %}
+{% block content %}
+<br/>
+<table width="100%" cellspacing="5px">
+    <tr>
+        <td width="230"></td>
+        <td width="230"></td>
+        <td width="230">
+            <div id="search-wrap">
+                <input id="search" type="" />
+                <img src="/static/images/search.png" alt="" />
+            </div>
+        </td>
+    </tr>
+</table>
+{% endblock %}
 {% block extend_head %}
 <script type="text/javascript" charset="utf-8">
     $(window).load(function(){

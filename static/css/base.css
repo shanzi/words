@@ -39,3 +39,24 @@ h1{
     border:solid 1px;
     border-color:#fff #aaa #aaa #fff;
 }
+#content{
+    background: url(/static/images/ruler_black.png) no-repeat;
+    min-height: 400px;
+}
+#search-wrap{
+    background:#fff;
+    height:30px;
+    -webkit-box-shadow:1px 1px 2px #000;
+    -webkit-border-radius: 15px;
+
+}
+#search{
+    border:none;
+    height:100%;
+    width:190px;
+    margin-left:15px;
+    font-size:20px;
+    background:transparent;
+}
+#search:focus
+{outline:none;}
