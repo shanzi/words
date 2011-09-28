@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <title>
+        {% block title %}
+        Clog
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="/static/css/animation.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css" media="screen" charset="utf-8">
+    <script type="text/javascript" src="/static/js/jquery-1.4.2.min.js"></script>
+    {% block extend_head %}
+    
+    {% endblock %}
+</head>
+<body>
+    <div id="header-wrap">
+        <div id="header">
+            {% block header %}
+                
+            {% endblock %}
+        </div>
+    </div>
+        <div id="content">
+            {% block content %}
+            
+            {% endblock %}
+        </div>
+    <div id="footer">
+        {% block footer %}
+        
+        {% endblock %}
+    </div>
+
+</body>
+</html>
