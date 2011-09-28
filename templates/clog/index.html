@@ -1,0 +1,42 @@
+{% extends "clog/base.html" %}
+{% block header %}
+<h1>{{ title }}</h1>
+<table id="metro" cellspacing="10">
+    <tr>
+        <td>
+            <div class="box_delay_0"></div>
+        </td>
+        <td>
+            <div class="box_delay_1"></div>
+        </td>
+        <td class="hlong" rowspan="2">
+            <div class="box_delay_3"></div>
+        </td>
+        <td class="hlong">
+            <div class="box_delay_4"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="box_delay_0"></div>
+        </td>
+        <td>
+            <div class="box_delay_1"></div>
+        </td>
+
+    </tr>
+</table>
+{% endblock %}
+{% block extend_head %}
+<script type="text/javascript" charset="utf-8">
+    $(window).load(function(){
+            setTimeout(function(){
+            $('h1').addClass('show');
+            $('#metro').find('div').andSelf().addClass('show');
+            },200)
+            setTimeout(function(){
+                for(var i=0;i<5;i++) $('#metro div').removeClass('box_delay_'+i)
+                },500)
+            })
+</script>
+{% endblock %}
