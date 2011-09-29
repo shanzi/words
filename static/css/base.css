@@ -6,7 +6,9 @@ body{
 #header-wrap{
     background:url(/static/images/gradient.png) center bottom #399dfa;
     -webkit-box-shadow:1px 1px 10px #999;
-
+    -moz-box-shadow:1px 1px 10px #999;
+    -o-box-shadow:1px 1px 10px #999;
+    box-shadow:1px 1px 10px #999;
 }
 #header,#content,#footer{
     width:720px;
@@ -44,19 +46,25 @@ h1{
     min-height: 400px;
 }
 #search-wrap{
-    background:#fff;
-    height:30px;
-    -webkit-box-shadow:1px 1px 2px #000;
-    -webkit-border-radius: 15px;
+    background:url(/static/images/search-back.png) center bottom no-repeat;
+    height:33px;
+    padding:0 0 0 15px;
 
 }
 #search{
     border:none;
-    height:100%;
-    width:190px;
-    margin-left:15px;
-    font-size:20px;
+    width:100%;
+    font-size:14px;
     background:transparent;
 }
 #search:focus
 {outline:none;}
+#search_submit
+{
+    background:url(/static/images/search.png) center center transparent;
+    border:none;
+    width:30px;
+    height:30px;
+    cursor:pointer;
+}
+

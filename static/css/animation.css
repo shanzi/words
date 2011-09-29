@@ -1,44 +1,75 @@
 .box_delay_0{
     -webkit-transition-delay:0;
+    -moz-transition-delay:0;
+    -o-transition-delay:0;
+    transition-delay:0;
 }
 .box_delay_1{
     -webkit-transition-delay:0.1s;
+    -moz-transition-delay:0.1s;
+    -o-transition-delay:0.1s;
+    transition-delay:0.1s;
 }
 .box_delay_2{
     -webkit-transition-delay:0.2s;
+    -moz-transition-delay:0.2s;
+    -o-transition-delay:0.2s;
+    transition-delay:0.2s;
 }
 .box_delay_3{
-    -webkit-transition-delay:0.25s;
+    -webkit-transition-delay:0.3s;
+    -moz-transition-delay:0.3s;
+    -o-transition-delay:0.3s;
+    transition-delay:0.3s;
 }
 .box_delay_4{
-    -webkit-transition-delay:0.3s;
+    -webkit-transition-delay:0.4s;
+    -moz-transition-delay:0.4s;
+    -o-transition-delay:0.4s;
+    transition-delay:0.4s;
 }
-#metro{
-    -webkit-perspective:500px;
-    -webkit-perspective-origin: 0px 100px 0;
-}
-#metro div{
-    -webkit-transform: translate3d(400px,10px,-300px) rotateY(45deg); 
 
-    -webkit-transform-style:preserves-3d;
+#metro div{
+    -webkit-transform: translate(300px) scale(0.3); 
+    -moz-transform: translate(300px) scale(0.3); 
+    -o-transform: translate(300px) scale(0.3); 
+    transform: translate(300px) scale(0.3); 
     opacity:0;
 }
 #metro div.show{
-    -webkit-transition-property:-webkit-transform,opacity;
-    -webkit-transition-duration:0.2s;
-    -webkit-transition-timing-function:ease-out;
-    -webkit-transform-origin:left center 0;
-    -webkit-transform: translate3d(0,0,0); 
     opacity:1;
+    -webkit-transition-property:-webkit-transform,opacity;
+    -webkit-transition-duration:0.3s;
+    -webkit-transition-timing-function:ease-out;
+    -moz-transition-property:-moz-transform,opacity;
+    -moz-transition-duration:0.3s;
+    -moz-transition-timing-function:ease-out;
+    -o-transition-property:-o-transform,opacity;
+    -o-transition-duration:0.3s;
+    -o-transition-timing-function:ease-out;
+    transition-property:transform,opacity;
+    transition-duration:0.3s;
+    transition-timing-function:ease-out;
+    -moz-transform: translate(0,0) scale(1);
+    -o-transform: translate(0,0) scale(1);
+    transform: translate(0,0) scale(1);
+    -webkit-transform: translate(0,0) scale(1);
 }
 #metro div:hover
 {
-    -webkit-transform: rotateY(5deg);
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    transform: scale(0.9);
+
 }
 h1{
     opacity:0;
 }
 h1.show{
     -webkit-transition:opacity 0.4s ease-out 1s;
+    -moz-transition:opacity 0.4s ease-out 1s;
+    -o-transition:opacity 0.4s ease-out 1s;
+    transition:opacity 0.4s ease-out 1s;
     opacity:1
 }

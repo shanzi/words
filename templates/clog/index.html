@@ -10,10 +10,10 @@
             <div class="box_delay_1"></div>
         </td>
         <td class="hlong" rowspan="2">
-            <div class="box_delay_3"></div>
+            <div class="box_delay_3" style="height:230px"></div>
         </td>
         <td class="hlong">
-            <div class="box_delay_4"></div>
+            <div class="box_delay_3"></div>
         </td>
     </tr>
     <tr>
@@ -35,8 +35,18 @@
         <td width="230"></td>
         <td width="230">
             <div id="search-wrap">
-                <input id="search" type="" />
-                <img src="/static/images/search.png" alt="" />
+                <form action="/clog/search/" method="get">
+                <table>
+                	<tr>
+                        <td width="173">
+                                <input id="search" name='q'  placeholder="Search" autocomplete="off"/>
+                        </td>
+                        <td>
+                            <input id="search_submit" type="submit" value=""/>
+                        </td>
+                	</tr>
+                </form>
+                </table>
             </div>
         </td>
     </tr>
@@ -47,7 +57,7 @@
     $(window).load(function(){
             setTimeout(function(){
             $('h1').addClass('show');
-            $('#metro').find('div').andSelf().addClass('show');
+            $('#metro').find('div').addClass('show');
             },200)
             setTimeout(function(){
                 for(var i=0;i<5;i++) $('#metro div').removeClass('box_delay_'+i)
