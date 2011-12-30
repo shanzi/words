@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from words.views import *
 from words.shorturls.views import expand_shorturl,new_shorturl,shorturl_index
 from django.contrib.auth.views import login,logout
-
+from words.diumoo.views import index as diumoo_index
 
 
 
@@ -24,6 +24,7 @@ urlpatterns = patterns('',
         # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
         # Uncomment the next line to enable the admin:
+        url(r'^diumoo/?$',diumoo_index),
         url(r'^$',index),
         url(r'^admin/', include(admin.site.urls)),
         url(r'^keywords/',include('words.keywords.urls')),
